@@ -25,7 +25,7 @@ class SplashViewController: UIViewController {
     }
 
     func initLayout() {
-        let imageView = UIImageView(image: UIImage(named: "Default-568h@2x"))
+        let imageView = UIImageView(image: UIImage(named: "LaunchImage.png"))
         view.addSubview(imageView)
         imageView.snp_makeConstraints{ (make) -> Void in
             make.edges.equalTo(self.view)

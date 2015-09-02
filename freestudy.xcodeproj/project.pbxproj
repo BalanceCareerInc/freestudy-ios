@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		221726DA196815ECA511AE60 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 816DF288324032085DC13CC2 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		9B09892A1B96C27500DEECB4 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B0989291B96C27500DEECB4 /* Default-568h@2x.png */; };
 		9B09892C1B96C38C00DEECB4 /* TagsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B09892B1B96C38C00DEECB4 /* TagsManager.swift */; };
 		9BC28D5D1B96B60C00B1B744 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC28D5C1B96B60C00B1B744 /* AppDelegate.swift */; };
 		9BC28D5F1B96B60C00B1B744 /* StudyListTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC28D5E1B96B60C00B1B744 /* StudyListTableController.swift */; };
@@ -30,7 +29,6 @@
 /* Begin PBXFileReference section */
 		6EE72B0EB040FAF284542B66 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		816DF288324032085DC13CC2 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9B0989291B96C27500DEECB4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		9B09892B1B96C38C00DEECB4 /* TagsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsManager.swift; sourceTree = "<group>"; };
 		9BC28D571B96B60C00B1B744 /* freestudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = freestudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC28D5B1B96B60C00B1B744 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -87,7 +85,6 @@
 			isa = PBXGroup;
 			children = (
 				9F84BC341B96E8C000C28536 /* Controllers */,
-				9B0989291B96C27500DEECB4 /* Default-568h@2x.png */,
 				9BC28D5C1B96B60C00B1B744 /* AppDelegate.swift */,
 				9BC28D631B96B60C00B1B744 /* Images.xcassets */,
 				9B09892B1B96C38C00DEECB4 /* TagsManager.swift */,
@@ -232,7 +229,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BC28D641B96B60C00B1B744 /* Images.xcassets in Resources */,
-				9B09892A1B96C27500DEECB4 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,6 +406,7 @@
 			baseConfigurationReference = A6BB98C70711799D0A8BAD7C /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = freestudy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -422,6 +419,7 @@
 			baseConfigurationReference = 6EE72B0EB040FAF284542B66 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = freestudy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
