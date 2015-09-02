@@ -7,47 +7,30 @@ class StudyListViewController: UITableViewController {
     lazy var label = UILabel()
     var studies: JSON?
 
+    // MARK: Initialization
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchTags()
+        initLayout()
+
         fetchStudies()
-        addFilterBarButtonItem()
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func initLayout() {
+        addFilterBarButtonItem()
+        tableView.backgroundColor = UIColor.grayColor()
+        tableView.registerClass(StudyListItemTableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        tableView.estimatedRowHeight = 44
+        let inset = UIEdgeInsetsMake(7, 0, 7, 0);
+        tableView.contentInset = inset
     }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.studies == nil {
-            return 0
-        }
-        return self.studies!.count
+
+    func addFilterBarButtonItem() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "filter", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("itemClicked"))
     }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
-        cell.textLabel?.text = self.studies![indexPath.row]["title"].stringValue
-        
-        return cell
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    }
-    
-    func fetchTags() {
-        Alamofire
-            .request(
-                .POST,
-                "https://ssl-app.studysearch.co.kr/mobile/launch/", headers: ["Accept": "application/json"]
-            )
-            .responseJSON { _, _, data, _ in
-                var json = JSON(data!)
-                TagsManager.sharedInstance.putTags(json["tags"])
-            }
-    }
+
+    // MARK: Load Data
     
     func fetchStudies(areas: Array<String>=Array<String>(), categories: Array<String>=Array<String>()) {
         var parameters = "?"
@@ -68,11 +51,26 @@ class StudyListViewController: UITableViewController {
                 self.tableView.reloadData()
         }
     }
-    
-    func addFilterBarButtonItem() {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "filter", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("itemClicked"))
+
+
+    // MARK: Cell
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if self.studies == nil {
+            return 0
+        }
+        return self.studies!.count
     }
     
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCellWithIdentifier("cell") as! StudyListItemTableViewCell
+        cell.studyTitle.text = self.studies![indexPath.row]["title"].stringValue
+        
+        return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    }
+
     func itemClicked() {
         let tagFilterViewController = TagFilterViewController(studyListViewController: self)
         let navigatedTagFilterViewController = UINavigationController(rootViewController: tagFilterViewController)

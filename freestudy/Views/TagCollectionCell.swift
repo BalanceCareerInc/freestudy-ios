@@ -6,8 +6,8 @@ class TagCollectionCell : UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+
         self.addSubview(self.label)
-        
         label.snp_makeConstraints { (make) -> Void in
             make.center.equalTo(self)
         }
