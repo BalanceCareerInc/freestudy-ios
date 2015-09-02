@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		221726DA196815ECA511AE60 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 816DF288324032085DC13CC2 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		9B09892A1B96C27500DEECB4 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B0989291B96C27500DEECB4 /* Default-568h@2x.png */; };
 		9B09892C1B96C38C00DEECB4 /* TagsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B09892B1B96C38C00DEECB4 /* TagsManager.swift */; };
 		9B09892E1B96CD8000DEECB4 /* TagFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B09892D1B96CD8000DEECB4 /* TagFilterViewController.swift */; };
 		9B0989301B96CEB900DEECB4 /* TagCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B09892F1B96CEB900DEECB4 /* TagCollectionCell.swift */; };
@@ -16,6 +15,7 @@
 		9BC28D5F1B96B60C00B1B744 /* StudyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC28D5E1B96B60C00B1B744 /* StudyListViewController.swift */; };
 		9BC28D641B96B60C00B1B744 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BC28D631B96B60C00B1B744 /* Images.xcassets */; };
 		9BC28D731B96B60C00B1B744 /* freestudyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC28D721B96B60C00B1B744 /* freestudyTests.swift */; };
+		9F84BC331B96C77B00C28536 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F84BC321B96C77B00C28536 /* SplashViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,7 +31,6 @@
 /* Begin PBXFileReference section */
 		6EE72B0EB040FAF284542B66 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		816DF288324032085DC13CC2 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9B0989291B96C27500DEECB4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		9B09892B1B96C38C00DEECB4 /* TagsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsManager.swift; sourceTree = "<group>"; };
 		9B09892D1B96CD8000DEECB4 /* TagFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagFilterViewController.swift; sourceTree = "<group>"; };
 		9B09892F1B96CEB900DEECB4 /* TagCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCollectionCell.swift; sourceTree = "<group>"; };
@@ -43,6 +42,7 @@
 		9BC28D6C1B96B60C00B1B744 /* freestudyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = freestudyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC28D711B96B60C00B1B744 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9BC28D721B96B60C00B1B744 /* freestudyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = freestudyTests.swift; sourceTree = "<group>"; };
+		9F84BC321B96C77B00C28536 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		A6BB98C70711799D0A8BAD7C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,14 +88,14 @@
 		9BC28D591B96B60C00B1B744 /* freestudy */ = {
 			isa = PBXGroup;
 			children = (
-				9B0989291B96C27500DEECB4 /* Default-568h@2x.png */,
+				9F84BC341B96E8C000C28536 /* Controllers */,
 				9BC28D5C1B96B60C00B1B744 /* AppDelegate.swift */,
 				9BC28D5E1B96B60C00B1B744 /* StudyListViewController.swift */,
 				9BC28D631B96B60C00B1B744 /* Images.xcassets */,
-				9BC28D5A1B96B60C00B1B744 /* Supporting Files */,
 				9B09892B1B96C38C00DEECB4 /* TagsManager.swift */,
 				9B09892D1B96CD8000DEECB4 /* TagFilterViewController.swift */,
 				9B09892F1B96CEB900DEECB4 /* TagCollectionCell.swift */,
+				9BC28D5A1B96B60C00B1B744 /* Supporting Files */,
 			);
 			path = freestudy;
 			sourceTree = "<group>";
@@ -131,6 +131,15 @@
 				816DF288324032085DC13CC2 /* Pods.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9F84BC341B96E8C000C28536 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9F84BC321B96C77B00C28536 /* SplashViewController.swift */,
+				9BC28D5E1B96B60C00B1B744 /* StudyListTableController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		E05ADD80421315A905484EA0 /* Pods */ = {
@@ -227,7 +236,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BC28D641B96B60C00B1B744 /* Images.xcassets in Resources */,
-				9B09892A1B96C27500DEECB4 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +306,7 @@
 				9B0989301B96CEB900DEECB4 /* TagCollectionCell.swift in Sources */,
 				9BC28D5D1B96B60C00B1B744 /* AppDelegate.swift in Sources */,
 				9B09892E1B96CD8000DEECB4 /* TagFilterViewController.swift in Sources */,
+				9F84BC331B96C77B00C28536 /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,6 +415,7 @@
 			baseConfigurationReference = A6BB98C70711799D0A8BAD7C /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = freestudy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -418,6 +428,7 @@
 			baseConfigurationReference = 6EE72B0EB040FAF284542B66 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = freestudy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
