@@ -9,7 +9,7 @@ class TagCollectionCell : UICollectionViewCell {
         self.addSubview(self.label)
         
         label.snp_makeConstraints { (make) -> Void in
-            make.edges.equalTo(self).insets(UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 5))
+            make.center.equalTo(self)
         }
     }
 

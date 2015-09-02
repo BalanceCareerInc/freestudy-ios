@@ -1,9 +1,14 @@
 import SnapKit
 
 class TagFilterViewController: UICollectionViewController {
-    override init(collectionViewLayout layout: UICollectionViewLayout) {
+    
+    let studyListViewController: StudyListViewController!
+    
+    init(studyListViewController: StudyListViewController) {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = UICollectionViewScrollDirection.Vertical
+        self.studyListViewController = studyListViewController
         super.init(collectionViewLayout: layout)
-        self.collectionView?.backgroundColor = UIColor.whiteColor()
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -16,7 +21,10 @@ class TagFilterViewController: UICollectionViewController {
         self.collectionView?.snp_makeConstraints({ (make) -> Void in
             make.edges.equalTo(self.view).insets(UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5))
         })
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "close", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("closeModal"))
+        self.collectionView?.allowsMultipleSelection = true
+        self.collectionView?.backgroundColor = UIColor.whiteColor()
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "닫기", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("closeModal"))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "검색", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("searchWithSelectedTags"))
     }
     
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -31,6 +39,14 @@ class TagFilterViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("TagCell", forIndexPath: indexPath) as! TagCollectionCell
         cell.label.text = TagsManager.sharedInstance.displayNames[tags(forSection: indexPath.section)[indexPath.row]]!
         return cell
+    }
+    
+    override func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+        collectionView.cellForItemAtIndexPath(indexPath)?.backgroundColor = UIColor.whiteColor()
+    }
+    
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        collectionView.cellForItemAtIndexPath(indexPath)?.backgroundColor = UIColor.yellowColor()
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -60,6 +76,12 @@ class TagFilterViewController: UICollectionViewController {
         }
         return Array<String>()
     }
+    
+    
+    func searchWithSelectedTags() {
+        self.collectionView?.indexPathsForSelectedItems()
+    }
+    
     
     func closeModal() {
         self.dismissViewControllerAnimated(true, completion: nil)
