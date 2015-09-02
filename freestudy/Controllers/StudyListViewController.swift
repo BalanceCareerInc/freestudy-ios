@@ -9,7 +9,6 @@ class StudyListViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchTags()
         fetchStudies()
         addFilterBarButtonItem()
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -35,18 +34,6 @@ class StudyListViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    }
-    
-    func fetchTags() {
-        Alamofire
-            .request(
-                .POST,
-                "https://ssl-app.studysearch.co.kr/mobile/launch/", headers: ["Accept": "application/json"]
-            )
-            .responseJSON { _, _, data, _ in
-                var json = JSON(data!)
-                TagsManager.sharedInstance.putTags(json["tags"])
-            }
     }
     
     func fetchStudies() {
