@@ -2,7 +2,7 @@ import SnapKit
 import Alamofire
 import SwiftyJSON
 
-class StudyListViewController: UITableViewController {
+class ListViewController: UITableViewController {
     
     lazy var label = UILabel()
     var studies: JSON?
@@ -72,7 +72,7 @@ class StudyListViewController: UITableViewController {
     }
 
     func itemClicked() {
-        let tagFilterViewController = TagFilterViewController(studyListViewController: self)
+        let tagFilterViewController = TagFilterViewController(listViewController: self)
         let navigatedTagFilterViewController = UINavigationController(rootViewController: tagFilterViewController)
         
         presentViewController(navigatedTagFilterViewController, animated: true, completion: nil)

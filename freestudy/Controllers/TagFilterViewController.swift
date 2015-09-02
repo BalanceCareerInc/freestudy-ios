@@ -2,12 +2,12 @@ import SnapKit
 
 class TagFilterViewController: UICollectionViewController {
     
-    let studyListViewController: StudyListViewController!
+    let listViewController: ListViewController!
     
-    init(studyListViewController: StudyListViewController) {
+    init(listViewController: ListViewController) {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = UICollectionViewScrollDirection.Vertical
-        self.studyListViewController = studyListViewController
+        self.listViewController = listViewController
         super.init(collectionViewLayout: layout)
     }
 
@@ -89,7 +89,7 @@ class TagFilterViewController: UICollectionViewController {
                 areas.append(tags(forSection: indexPath.section)[indexPath.row])
             }
         }
-        studyListViewController.fetchStudies(areas: areas, categories: categories)
+        listViewController.fetchStudies(areas: areas, categories: categories)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     

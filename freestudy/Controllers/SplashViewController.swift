@@ -50,7 +50,7 @@ class SplashViewController: UIViewController {
     // MARK: Transition
 
     func startMainController() {
-        let mainController = UINavigationController(rootViewController: StudyListViewController())
+        let mainController = UINavigationController(rootViewController: ListViewController())
         mainController.transitioningDelegate = self
         self.presentViewController(mainController, animated: true, completion: nil)
     }

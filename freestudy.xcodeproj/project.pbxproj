@@ -14,7 +14,7 @@
 		9BC28D641B96B60C00B1B744 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BC28D631B96B60C00B1B744 /* Images.xcassets */; };
 		9BC28D731B96B60C00B1B744 /* freestudyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC28D721B96B60C00B1B744 /* freestudyTests.swift */; };
 		9F68C5EE1B97055300593021 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F68C5EB1B97055300593021 /* SplashViewController.swift */; };
-		9F68C5EF1B97055300593021 /* StudyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F68C5EC1B97055300593021 /* StudyListViewController.swift */; };
+		9F68C5EF1B97055300593021 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F68C5EC1B97055300593021 /* ListViewController.swift */; };
 		9F68C5F01B97055300593021 /* TagFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F68C5ED1B97055300593021 /* TagFilterViewController.swift */; };
 		9F68C5F41B970C4300593021 /* StudyListItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F68C5F31B970C4300593021 /* StudyListItemTableViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -42,7 +42,7 @@
 		9BC28D711B96B60C00B1B744 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9BC28D721B96B60C00B1B744 /* freestudyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = freestudyTests.swift; sourceTree = "<group>"; };
 		9F68C5EB1B97055300593021 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
-		9F68C5EC1B97055300593021 /* StudyListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudyListViewController.swift; sourceTree = "<group>"; };
+		9F68C5EC1B97055300593021 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		9F68C5ED1B97055300593021 /* TagFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagFilterViewController.swift; sourceTree = "<group>"; };
 		9F68C5F31B970C4300593021 /* StudyListItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudyListItemTableViewCell.swift; sourceTree = "<group>"; };
 		A6BB98C70711799D0A8BAD7C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -146,7 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				9F68C5EB1B97055300593021 /* SplashViewController.swift */,
-				9F68C5EC1B97055300593021 /* StudyListViewController.swift */,
+				9F68C5EC1B97055300593021 /* ListViewController.swift */,
 				9F68C5ED1B97055300593021 /* TagFilterViewController.swift */,
 			);
 			path = Controllers;
@@ -315,7 +315,7 @@
 				9F68C5F01B97055300593021 /* TagFilterViewController.swift in Sources */,
 				9B0989301B96CEB900DEECB4 /* TagCollectionCell.swift in Sources */,
 				9BC28D5D1B96B60C00B1B744 /* AppDelegate.swift in Sources */,
-				9F68C5EF1B97055300593021 /* StudyListViewController.swift in Sources */,
+				9F68C5EF1B97055300593021 /* ListViewController.swift in Sources */,
 				9F68C5EE1B97055300593021 /* SplashViewController.swift in Sources */,
 				9F68C5F41B970C4300593021 /* StudyListItemTableViewCell.swift in Sources */,
 			);
