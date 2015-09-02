@@ -88,11 +88,11 @@
 		9BC28D591B96B60C00B1B744 /* freestudy */ = {
 			isa = PBXGroup;
 			children = (
+				9F68C5F11B97059800593021 /* Views */,
 				9F84BC341B96E8C000C28536 /* Controllers */,
 				9BC28D5C1B96B60C00B1B744 /* AppDelegate.swift */,
 				9BC28D631B96B60C00B1B744 /* Images.xcassets */,
 				9B09892B1B96C38C00DEECB4 /* TagsManager.swift */,
-				9B09892F1B96CEB900DEECB4 /* TagCollectionCell.swift */,
 				9BC28D5A1B96B60C00B1B744 /* Supporting Files */,
 			);
 			path = freestudy;
@@ -129,6 +129,14 @@
 				816DF288324032085DC13CC2 /* Pods.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9F68C5F11B97059800593021 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9B09892F1B96CEB900DEECB4 /* TagCollectionCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		9F84BC341B96E8C000C28536 /* Controllers */ = {
