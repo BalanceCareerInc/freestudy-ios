@@ -11,6 +11,7 @@ class StudyListTableController: UITableViewController {
         super.viewDidLoad()
         fetchTags()
         fetchStudies()
+        addFilterBarButtonItem()
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
 
@@ -66,6 +67,14 @@ class StudyListTableController: UITableViewController {
                 self.studies = json["study_list"]
                 self.tableView.reloadData()
         }
+    }
+    
+    func addFilterBarButtonItem() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "filter", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("itemClicked"))
+    }
+    
+    func itemClicked() {
+        println("hi")
     }
 }
 
