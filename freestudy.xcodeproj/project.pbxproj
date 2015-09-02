@@ -86,13 +86,12 @@
 		9BC28D591B96B60C00B1B744 /* freestudy */ = {
 			isa = PBXGroup;
 			children = (
+				9F84BC341B96E8C000C28536 /* Controllers */,
 				9B0989291B96C27500DEECB4 /* Default-568h@2x.png */,
 				9BC28D5C1B96B60C00B1B744 /* AppDelegate.swift */,
-				9BC28D5E1B96B60C00B1B744 /* StudyListTableController.swift */,
 				9BC28D631B96B60C00B1B744 /* Images.xcassets */,
-				9BC28D5A1B96B60C00B1B744 /* Supporting Files */,
 				9B09892B1B96C38C00DEECB4 /* TagsManager.swift */,
-				9F84BC321B96C77B00C28536 /* SplashViewController.swift */,
+				9BC28D5A1B96B60C00B1B744 /* Supporting Files */,
 			);
 			path = freestudy;
 			sourceTree = "<group>";
@@ -128,6 +127,15 @@
 				816DF288324032085DC13CC2 /* Pods.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9F84BC341B96E8C000C28536 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9F84BC321B96C77B00C28536 /* SplashViewController.swift */,
+				9BC28D5E1B96B60C00B1B744 /* StudyListTableController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		E05ADD80421315A905484EA0 /* Pods */ = {
