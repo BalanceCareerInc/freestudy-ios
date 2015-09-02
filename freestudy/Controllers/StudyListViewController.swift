@@ -7,34 +7,30 @@ class StudyListViewController: UITableViewController {
     lazy var label = UILabel()
     var studies: JSON?
 
+    // MARK: Initialization
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        initLayout()
+
         fetchStudies()
-        addFilterBarButtonItem()
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func initLayout() {
+        addFilterBarButtonItem()
+        tableView.backgroundColor = UIColor.grayColor()
+        tableView.registerClass(StudyListItemTableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        tableView.estimatedRowHeight = 44
+        let inset = UIEdgeInsetsMake(7, 0, 7, 0);
+        tableView.contentInset = inset
     }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.studies == nil {
-            return 0
-        }
-        return self.studies!.count
+
+    func addFilterBarButtonItem() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "filter", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("itemClicked"))
     }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
-        cell.textLabel?.text = self.studies![indexPath.row]["title"].stringValue
-        
-        return cell
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    }
+
+    // MARK: Load Data
     
     func fetchStudies() {
         Alamofire
@@ -48,11 +44,26 @@ class StudyListViewController: UITableViewController {
                 self.tableView.reloadData()
         }
     }
-    
-    func addFilterBarButtonItem() {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "filter", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("itemClicked"))
+
+
+    // MARK: Cell
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if self.studies == nil {
+            return 0
+        }
+        return self.studies!.count
     }
     
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCellWithIdentifier("cell") as! StudyListItemTableViewCell
+        cell.studyTitle.text = self.studies![indexPath.row]["title"].stringValue
+        
+        return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    }
+
     func itemClicked() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = UICollectionViewScrollDirection.Vertical
