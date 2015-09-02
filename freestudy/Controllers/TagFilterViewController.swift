@@ -79,7 +79,18 @@ class TagFilterViewController: UICollectionViewController {
     
     
     func searchWithSelectedTags() {
-        self.collectionView?.indexPathsForSelectedItems()
+        var categories = Array<String>()
+        var areas = Array<String>()
+        for indexPath in self.collectionView!.indexPathsForSelectedItems() {
+            if indexPath.section == 0 {
+                categories.append(tags(forSection: indexPath.section)[indexPath.row])
+            }
+            else if indexPath.section == 1 {
+                areas.append(tags(forSection: indexPath.section)[indexPath.row])
+            }
+        }
+        studyListViewController.fetchStudies(areas: areas, categories: categories)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     

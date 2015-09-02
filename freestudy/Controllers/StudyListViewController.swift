@@ -49,11 +49,18 @@ class StudyListViewController: UITableViewController {
             }
     }
     
-    func fetchStudies() {
+    func fetchStudies(areas: Array<String>=Array<String>(), categories: Array<String>=Array<String>()) {
+        var parameters = "?"
+        for area in areas {
+            parameters = parameters + "area=" + area + "&"
+        }
+        for category in categories {
+            parameters = parameters + "category=" + category + "&"
+        }
         Alamofire
             .request(
                 .GET,
-                "https://ssl-app.studysearch.co.kr/study/", headers: ["Accept": "application/json"]
+                "http://free.studysearch.co.kr/study/" + parameters, headers: ["Accept": "application/json"]
             )
             .responseJSON { _, _, data, _ in
                 var json = JSON(data!)
