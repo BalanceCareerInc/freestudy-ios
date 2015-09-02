@@ -42,15 +42,7 @@ class SplashViewController: UIViewController {
             )
             .responseJSON { _, _, data, _ in
                 var json = JSON(data!)
-                var displayNames = Dictionary<String, String>()
-                TagsManager.sharedInstance.displayNames = Dictionary(map(json["tags"]["display_names"].dictionaryValue){
-                    (key, value) in (key, value.stringValue)
-                    })
-                TagsManager.sharedInstance.filters = Dictionary(map(json["tags"]["filters"].dictionaryValue){
-                    (key:String, value:JSON) in
-                    (key, map(value.arrayValue){(tagName:JSON) -> String in tagName.stringValue})
-                    })
-
+                TagsManager.sharedInstance.putTags(json["tags"])
                 self.startMainController()
         }
     }
