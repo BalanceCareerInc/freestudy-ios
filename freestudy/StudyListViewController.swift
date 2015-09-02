@@ -67,7 +67,13 @@ class StudyListViewController: UITableViewController {
     }
     
     func itemClicked() {
-        println("hi")
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = UICollectionViewScrollDirection.Vertical
+        
+        let tagFilterViewController = TagFilterViewController(collectionViewLayout: layout)
+        let navigatedTagFilterViewController = UINavigationController(rootViewController: tagFilterViewController)
+        
+        presentViewController(navigatedTagFilterViewController, animated: true, completion: nil)
     }
 }
 

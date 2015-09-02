@@ -11,6 +11,7 @@
 		9B09892A1B96C27500DEECB4 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B0989291B96C27500DEECB4 /* Default-568h@2x.png */; };
 		9B09892C1B96C38C00DEECB4 /* TagsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B09892B1B96C38C00DEECB4 /* TagsManager.swift */; };
 		9B09892E1B96CD8000DEECB4 /* TagFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B09892D1B96CD8000DEECB4 /* TagFilterViewController.swift */; };
+		9B0989301B96CEB900DEECB4 /* TagCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B09892F1B96CEB900DEECB4 /* TagCollectionCell.swift */; };
 		9BC28D5D1B96B60C00B1B744 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC28D5C1B96B60C00B1B744 /* AppDelegate.swift */; };
 		9BC28D5F1B96B60C00B1B744 /* StudyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC28D5E1B96B60C00B1B744 /* StudyListViewController.swift */; };
 		9BC28D641B96B60C00B1B744 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BC28D631B96B60C00B1B744 /* Images.xcassets */; };
@@ -33,6 +34,7 @@
 		9B0989291B96C27500DEECB4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		9B09892B1B96C38C00DEECB4 /* TagsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsManager.swift; sourceTree = "<group>"; };
 		9B09892D1B96CD8000DEECB4 /* TagFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagFilterViewController.swift; sourceTree = "<group>"; };
+		9B09892F1B96CEB900DEECB4 /* TagCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCollectionCell.swift; sourceTree = "<group>"; };
 		9BC28D571B96B60C00B1B744 /* freestudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = freestudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC28D5B1B96B60C00B1B744 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9BC28D5C1B96B60C00B1B744 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				9BC28D5A1B96B60C00B1B744 /* Supporting Files */,
 				9B09892B1B96C38C00DEECB4 /* TagsManager.swift */,
 				9B09892D1B96CD8000DEECB4 /* TagFilterViewController.swift */,
+				9B09892F1B96CEB900DEECB4 /* TagCollectionCell.swift */,
 			);
 			path = freestudy;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 			files = (
 				9BC28D5F1B96B60C00B1B744 /* StudyListViewController.swift in Sources */,
 				9B09892C1B96C38C00DEECB4 /* TagsManager.swift in Sources */,
+				9B0989301B96CEB900DEECB4 /* TagCollectionCell.swift in Sources */,
 				9BC28D5D1B96B60C00B1B744 /* AppDelegate.swift in Sources */,
 				9B09892E1B96CD8000DEECB4 /* TagFilterViewController.swift in Sources */,
 			);
