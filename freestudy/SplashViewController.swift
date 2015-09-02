@@ -24,7 +24,7 @@ class SplashViewController: UIViewController {
         loadData()
     }
 
-    func initLayout {
+    func initLayout() {
         let imageView = UIImageView(image: UIImage(named: "Default-568h@2x"))
         view.addSubview(imageView)
         imageView.snp_makeConstraints{ (make) -> Void in
@@ -34,7 +34,7 @@ class SplashViewController: UIViewController {
 
     // MARK: Load Data
 
-    func loadData {
+    func loadData() {
         Alamofire
             .request(
                 .POST,
@@ -51,13 +51,13 @@ class SplashViewController: UIViewController {
                     (key, map(value.arrayValue){(tagName:JSON) -> String in tagName.stringValue})
                     })
 
-                startMainController()
+                self.startMainController()
         }
     }
 
     // MARK: Transition
 
-    func startMainController {
+    func startMainController() {
         let mainController = UINavigationController(rootViewController: StudyListTableController())
         mainController.transitioningDelegate = self
         self.presentViewController(mainController, animated: true, completion: nil)
