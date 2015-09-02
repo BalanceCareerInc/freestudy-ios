@@ -10,8 +10,9 @@
 		221726DA196815ECA511AE60 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 816DF288324032085DC13CC2 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		9B09892A1B96C27500DEECB4 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B0989291B96C27500DEECB4 /* Default-568h@2x.png */; };
 		9B09892C1B96C38C00DEECB4 /* TagsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B09892B1B96C38C00DEECB4 /* TagsManager.swift */; };
+		9B09892E1B96CD8000DEECB4 /* TagFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B09892D1B96CD8000DEECB4 /* TagFilterViewController.swift */; };
 		9BC28D5D1B96B60C00B1B744 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC28D5C1B96B60C00B1B744 /* AppDelegate.swift */; };
-		9BC28D5F1B96B60C00B1B744 /* StudyListTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC28D5E1B96B60C00B1B744 /* StudyListTableController.swift */; };
+		9BC28D5F1B96B60C00B1B744 /* StudyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC28D5E1B96B60C00B1B744 /* StudyListViewController.swift */; };
 		9BC28D641B96B60C00B1B744 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BC28D631B96B60C00B1B744 /* Images.xcassets */; };
 		9BC28D731B96B60C00B1B744 /* freestudyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC28D721B96B60C00B1B744 /* freestudyTests.swift */; };
 /* End PBXBuildFile section */
@@ -31,10 +32,11 @@
 		816DF288324032085DC13CC2 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B0989291B96C27500DEECB4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		9B09892B1B96C38C00DEECB4 /* TagsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsManager.swift; sourceTree = "<group>"; };
+		9B09892D1B96CD8000DEECB4 /* TagFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagFilterViewController.swift; sourceTree = "<group>"; };
 		9BC28D571B96B60C00B1B744 /* freestudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = freestudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC28D5B1B96B60C00B1B744 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9BC28D5C1B96B60C00B1B744 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9BC28D5E1B96B60C00B1B744 /* StudyListTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyListTableController.swift; sourceTree = "<group>"; };
+		9BC28D5E1B96B60C00B1B744 /* StudyListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyListViewController.swift; sourceTree = "<group>"; };
 		9BC28D631B96B60C00B1B744 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9BC28D6C1B96B60C00B1B744 /* freestudyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = freestudyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC28D711B96B60C00B1B744 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -86,10 +88,11 @@
 			children = (
 				9B0989291B96C27500DEECB4 /* Default-568h@2x.png */,
 				9BC28D5C1B96B60C00B1B744 /* AppDelegate.swift */,
-				9BC28D5E1B96B60C00B1B744 /* StudyListTableController.swift */,
+				9BC28D5E1B96B60C00B1B744 /* StudyListViewController.swift */,
 				9BC28D631B96B60C00B1B744 /* Images.xcassets */,
 				9BC28D5A1B96B60C00B1B744 /* Supporting Files */,
 				9B09892B1B96C38C00DEECB4 /* TagsManager.swift */,
+				9B09892D1B96CD8000DEECB4 /* TagFilterViewController.swift */,
 			);
 			path = freestudy;
 			sourceTree = "<group>";
@@ -287,9 +290,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9BC28D5F1B96B60C00B1B744 /* StudyListTableController.swift in Sources */,
+				9BC28D5F1B96B60C00B1B744 /* StudyListViewController.swift in Sources */,
 				9B09892C1B96C38C00DEECB4 /* TagsManager.swift in Sources */,
 				9BC28D5D1B96B60C00B1B744 /* AppDelegate.swift in Sources */,
+				9B09892E1B96CD8000DEECB4 /* TagFilterViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

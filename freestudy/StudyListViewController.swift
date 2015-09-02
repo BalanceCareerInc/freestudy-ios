@@ -2,7 +2,7 @@ import SnapKit
 import Alamofire
 import SwiftyJSON
 
-class StudyListTableController: UITableViewController {
+class StudyListViewController: UITableViewController {
     
     lazy var label = UILabel()
     var studies: JSON?
