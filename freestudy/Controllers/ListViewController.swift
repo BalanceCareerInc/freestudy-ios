@@ -27,7 +27,7 @@ class ListViewController: UITableViewController {
     }
 
     func addFilterBarButtonItem() {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "filter", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("itemClicked"))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "filter", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("showFilterDialog"))
     }
 
     // MARK: Load Data
@@ -69,9 +69,11 @@ class ListViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        self.navigationController?.pushViewController(ReadViewController(), animated: true)
     }
 
-    func itemClicked() {
+    func showFilterDialog() {
         let tagFilterViewController = TagFilterViewController(listViewController: self)
         let navigatedTagFilterViewController = UINavigationController(rootViewController: tagFilterViewController)
         
