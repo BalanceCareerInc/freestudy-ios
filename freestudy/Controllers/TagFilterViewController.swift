@@ -24,8 +24,12 @@ class TagFilterViewController: UICollectionViewController {
         self.collectionView?.allowsMultipleSelection = true
         self.view.backgroundColor = UIColor.whiteColor()
         self.collectionView?.backgroundColor = UIColor.whiteColor()
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "닫기", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("closeModal"))
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "검색", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("searchWithSelectedTags"))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "닫기", style: .Plain, target: self, action: Selector("closeModal")
+        )
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "검색", style: .Plain, target: self, action: Selector("searchWithSelectedTags")
+        )
     }
     
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -50,7 +54,9 @@ class TagFilterViewController: UICollectionViewController {
         collectionView.cellForItemAtIndexPath(indexPath)?.backgroundColor = UIColor.yellowColor()
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let displayName = TagsManager.sharedInstance.displayNames[tags(forSection: indexPath.section)[indexPath.row]]!
         let displayNameString = displayName as NSString
         let size = displayNameString.sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(17.0)])
@@ -58,7 +64,9 @@ class TagFilterViewController: UICollectionViewController {
     }
     
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    func collectionView(collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         if section == 0{
             return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
