@@ -1,9 +1,29 @@
 import SnapKit
+import Alamofire
+import SwiftyJSON
 
 class ReadViewController : UIViewController {
     
+    var study: JSON?
     lazy var titleView = UILabel()
     lazy var contentView = UIWebView()
+    
+    init(studyId: Int) {
+        super.init(nibName: nil, bundle: nil)
+        Alamofire
+            .request(
+                .GET,
+                "http://free.studysearch.co.kr/study/\(studyId)/", headers: ["Accept": "application/json"]
+            )
+            .responseJSON { _, _, data, _ in
+                self.study = JSON(data!)["study"]
+                self.titleView.text = self.study!["title"].stringValue
+            }
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,7 +37,6 @@ class ReadViewController : UIViewController {
             make.left.equalTo(self.view).offset(20)
             make.right.equalTo(self.view).offset(-20)
         }
-        titleView.text = "[강남] 2015년 상반기 취업 스터디 - 실전면접, 자소서 피드백 교환, 기업 분석, 시사 상식, 인적성"
         titleView.lineBreakMode = .ByWordWrapping
         titleView.numberOfLines = 0
     }

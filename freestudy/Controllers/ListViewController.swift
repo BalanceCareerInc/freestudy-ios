@@ -49,7 +49,7 @@ class ListViewController: UITableViewController {
                 var json = JSON(data!)
                 self.studies = json["study_list"]
                 self.tableView.reloadData()
-        }
+            }
     }
 
 
@@ -70,7 +70,8 @@ class ListViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        self.navigationController?.pushViewController(ReadViewController(), animated: true)
+        let studyId = self.studies![indexPath.row]["id"].intValue
+        self.navigationController!.pushViewController(ReadViewController(studyId: studyId), animated: true)
     }
 
     func showFilterDialog() {
