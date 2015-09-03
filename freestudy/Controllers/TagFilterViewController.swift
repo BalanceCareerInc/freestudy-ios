@@ -22,6 +22,7 @@ class TagFilterViewController: UICollectionViewController {
             make.edges.equalTo(self.view).insets(UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5))
         })
         self.collectionView?.allowsMultipleSelection = true
+        self.view.backgroundColor = UIColor.whiteColor()
         self.collectionView?.backgroundColor = UIColor.whiteColor()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "닫기", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("closeModal"))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "검색", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("searchWithSelectedTags"))
