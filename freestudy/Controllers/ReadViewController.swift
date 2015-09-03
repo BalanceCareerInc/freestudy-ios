@@ -12,10 +12,10 @@ class ReadViewController : UIViewController {
         self.view.addSubview(self.titleView)
         
         titleView.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(self.view).offset(70)
+            var topLayoutGuide = self.topLayoutGuide as! UIView
+            make.top.equalTo(topLayoutGuide.snp_bottom).offset(10)
             make.left.equalTo(self.view).offset(20)
-            make.right.equalTo(self.view).offset(20)
-            make.width.equalTo(self.view.frame.width - 40)
+            make.right.equalTo(self.view).offset(-20)
         }
         titleView.text = "[강남] 2015년 상반기 취업 스터디 - 실전면접, 자소서 피드백 교환, 기업 분석, 시사 상식, 인적성"
         titleView.lineBreakMode = .ByWordWrapping
