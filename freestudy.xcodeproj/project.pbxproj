@@ -10,6 +10,7 @@
 		221726DA196815ECA511AE60 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 816DF288324032085DC13CC2 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		9B09892C1B96C38C00DEECB4 /* TagsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B09892B1B96C38C00DEECB4 /* TagsManager.swift */; };
 		9B0989301B96CEB900DEECB4 /* TagCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B09892F1B96CEB900DEECB4 /* TagCollectionCell.swift */; };
+		9BC19CFD1B994F5A008F2E11 /* UIImageWithColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC19CFC1B994F5A008F2E11 /* UIImageWithColorUtils.swift */; };
 		9BC28D5D1B96B60C00B1B744 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC28D5C1B96B60C00B1B744 /* AppDelegate.swift */; };
 		9BC28D641B96B60C00B1B744 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BC28D631B96B60C00B1B744 /* Images.xcassets */; };
 		9BC28D731B96B60C00B1B744 /* freestudyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC28D721B96B60C00B1B744 /* freestudyTests.swift */; };
@@ -36,6 +37,7 @@
 		816DF288324032085DC13CC2 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B09892B1B96C38C00DEECB4 /* TagsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsManager.swift; sourceTree = "<group>"; };
 		9B09892F1B96CEB900DEECB4 /* TagCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCollectionCell.swift; sourceTree = "<group>"; };
+		9BC19CFC1B994F5A008F2E11 /* UIImageWithColorUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageWithColorUtils.swift; sourceTree = "<group>"; };
 		9BC28D571B96B60C00B1B744 /* freestudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = freestudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC28D5B1B96B60C00B1B744 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9BC28D5C1B96B60C00B1B744 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				9BF9A2AF1B992BA30007582B /* HexcodeColorUtils.swift */,
+				9BC19CFC1B994F5A008F2E11 /* UIImageWithColorUtils.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 				9F68C5F01B97055300593021 /* TagFilterViewController.swift in Sources */,
 				9B0989301B96CEB900DEECB4 /* TagCollectionCell.swift in Sources */,
 				9BC28D5D1B96B60C00B1B744 /* AppDelegate.swift in Sources */,
+				9BC19CFD1B994F5A008F2E11 /* UIImageWithColorUtils.swift in Sources */,
 				9F68C5EF1B97055300593021 /* ListViewController.swift in Sources */,
 				9F68C5EE1B97055300593021 /* SplashViewController.swift in Sources */,
 				9BF9A2AD1B97C0150007582B /* ReadViewController.swift in Sources */,
