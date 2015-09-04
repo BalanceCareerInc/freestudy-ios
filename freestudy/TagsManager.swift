@@ -3,8 +3,8 @@ import SwiftyJSON
 class TagsManager {
     static let sharedInstance = TagsManager()
     private var filters: Dictionary<String, Array<String>>!
-    private var parents: Dictionary<String, String>!
     private var displayNames: Dictionary<String, String>!
+    private var parents = Dictionary<String, String>()
     var categories: Array<String>!
     var areas: Array<String>!
     
@@ -27,7 +27,7 @@ class TagsManager {
     func isSubSubTag(tagValue: String) -> Bool {
         var current:String? = tagValue
         for i in 0...2 {
-            current = self.parents[current!]!
+            current = self.parents[current!]
             if current == nil {
                 return false
             }
