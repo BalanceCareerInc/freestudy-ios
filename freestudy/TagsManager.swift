@@ -21,9 +21,9 @@ class TagsManager {
     }
     
     func isSubSubTag(tagValue: String) -> Bool {
-        var current = tagValue
+        var current:String? = tagValue
         for i in 0...2 {
-            current = self.parents[current]!
+            current = self.parents[current!]!
             if current == nil {
                 return false
             }
