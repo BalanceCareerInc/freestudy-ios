@@ -32,9 +32,19 @@ class ReadViewController : UIViewController, UIWebViewDelegate, UIScrollViewDele
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
         
+        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(
+            UIOffsetMake(0, -60), forBarMetrics: .Default
+        )
         initScrollView()
         initTitleViewLayout()
         initContentViewLayout()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController!.navigationBar.barTintColor = UIColor.whiteColor()
+        self.navigationController!.navigationBar.translucent = true
+        self.navigationController!.navigationBar.alpha = 0.8
     }
     
     func initScrollView() {

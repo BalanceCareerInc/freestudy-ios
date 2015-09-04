@@ -15,6 +15,13 @@ class ListViewController: UITableViewController {
 
         fetchStudies()
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController!.navigationBar.barTintColor = UIColor(hex: "#f48210")
+        self.navigationController!.navigationBar.alpha = 1.0
+        self.navigationController!.navigationBar.translucent = false
+    }
 
     func initLayout() {
         addFilterBarButtonItem()
