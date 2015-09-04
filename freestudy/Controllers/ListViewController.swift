@@ -5,10 +5,13 @@ import SwiftyJSON
 class ListViewController: UITableViewController {
     
     lazy var label = UILabel()
-    var studies: JSON?
+    var studies: [JSON] = []
 
     var selectedAreas = Array<String>()
     var selectedCategories = Array<String>()
+    var page = 1
+    var loading = false
+    var hitEndPage = false
 
     // MARK: Initialization
 
@@ -16,7 +19,7 @@ class ListViewController: UITableViewController {
         super.viewDidLoad()
         initLayout()
 
-        fetchStudies()
+        searchStudies()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -42,50 +45,12 @@ class ListViewController: UITableViewController {
         tableView.contentInset = inset
     }
 
-    // MARK: Load Data
-    
-    func fetchStudies(areas: Array<String>=Array<String>(), categories: Array<String>=Array<String>()) {
-        selectedAreas = areas
-        selectedCategories = categories
-        var parameters = "?"
-        for area in areas {
-            parameters = parameters + "area=" + area + "&"
-        }
-        for category in categories {
-            parameters = parameters + "category=" + category + "&"
-        }
-        Alamofire
-            .request(
-                .GET,
-                "http://free.studysearch.co.kr/study/" + parameters, headers: ["Accept": "application/json"]
-            )
-            .responseJSON { _, _, data, _ in
-                var json = JSON(data!)
-                self.studies = json["study_list"]
-                self.tableView.reloadData()
-            }
-    }
+    // MARK: Actions
 
-
-    // MARK: Cell
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.studies == nil {
-            return 0
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        if (self.studies.count != 0 && !hitEndPage && scrollView.contentOffset.y > scrollView.contentOffset.y - 1000) {
+            getNextPage()
         }
-        return self.studies!.count
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("cell") as! StudyListItemTableViewCell
-        let study = self.studies![indexPath.row]
-        cell.bindStudy(study)
-        return cell
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let studyId = self.studies![indexPath.row]["id"].intValue
-        self.navigationController!.pushViewController(ReadViewController(studyId: studyId), animated: true)
     }
 
     func showFilterDialog() {
@@ -93,6 +58,85 @@ class ListViewController: UITableViewController {
         let navigatedTagFilterViewController = UINavigationController(rootViewController: tagFilterViewController)
         
         presentViewController(navigatedTagFilterViewController, animated: true, completion: nil)
+    }
+
+    // MARK: Load Data
+    
+    func searchStudies(areas: Array<String>=Array<String>(), categories: Array<String>=Array<String>()) {
+        print("search!!\n")
+        if self.loading {
+            return
+        }
+        self.loading = true
+
+        page = 1
+        hitEndPage = false
+        selectedAreas = areas
+        selectedCategories = categories
+        self.studies = []
+
+        fetchStudies(search: true)
+    }
+
+    func getNextPage() {
+        if self.loading {
+            return
+        }
+        self.loading = true
+
+        self.page += 1
+
+        fetchStudies()
+    }
+
+    func fetchStudies(search: Bool = false) {
+        Alamofire
+            .request(
+                .GET,
+                "http://free.studysearch.co.kr/study/" + getFilterParameters(), headers: ["Accept": "application/json"]
+            )
+            .responseJSON { _, _, data, _ in
+                var json = JSON(data!)
+                self.studies = self.studies + json["study_list"].arrayValue
+                self.hitEndPage = json["end"].boolValue
+                self.tableView.reloadData()
+
+                self.loading = false
+
+                if search {
+                    self.tableView.setContentOffset(CGPointZero, animated: false)
+                }
+            }
+    }
+
+    func getFilterParameters() -> String {
+        var parameters = "?"
+        for area in self.selectedAreas {
+            parameters = parameters + "area=" + area + "&"
+        }
+        for category in self.selectedCategories {
+            parameters = parameters + "category=" + category + "&"
+        }
+        parameters = parameters + "page=" + String(self.page)
+        return parameters
+    }
+
+    // MARK: Cell
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.studies.count
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCellWithIdentifier("cell") as! StudyListItemTableViewCell
+        let study = self.studies[indexPath.row]
+        cell.bindStudy(study)
+        return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let studyId = self.studies[indexPath.row]["id"].intValue
+        self.navigationController!.pushViewController(ReadViewController(studyId: studyId), animated: true)
     }
 }
 

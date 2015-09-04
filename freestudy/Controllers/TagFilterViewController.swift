@@ -158,7 +158,7 @@ class TagFilterViewController: UICollectionViewController {
     
     
     func searchWithSelectedTags() {
-        listViewController.fetchStudies(areas: selectedAreas, categories: selectedCategories)
+        listViewController.searchStudies(areas: selectedAreas, categories: selectedCategories)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
