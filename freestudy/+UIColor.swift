@@ -4,6 +4,14 @@ extension UIColor {
     class func myOrangeColor() -> UIColor {
         return UIColor(hex: "#ef6c00")
     }
+
+    class func tranlucentWhiteColor() -> UIColor {
+        return UIColor(red: 255, green: 255, blue: 255, alpha: 0.7)
+    }
+
+    class func a0a0a0() -> UIColor {
+        return UIColor(hex: "#a0a0a0")
+    }
     
     convenience init(var hex: String, alpha: Int=100) {
         let hexLength = count(hex)
