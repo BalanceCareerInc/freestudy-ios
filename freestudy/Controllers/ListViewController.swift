@@ -3,8 +3,9 @@ import Alamofire
 import SwiftyJSON
 
 class ListViewController: UITableViewController {
-    
-    lazy var label = UILabel()
+
+    var searchView: UIView!
+
     var studies: [JSON] = []
 
     var selectedAreas = Array<String>()
@@ -24,6 +25,29 @@ class ListViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+
+        initNavigationBar()
+    }
+
+    func initLayout() {
+        tableView.backgroundColor = UIColor.grayColor()
+        tableView.registerClass(StudyListItemTableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        tableView.estimatedRowHeight = 44
+        tableView.rowHeight = UITableViewAutomaticDimension
+        let inset = UIEdgeInsetsMake(7, 0, 7, 0);
+        tableView.contentInset = inset
+
+        initSearchButton()
+    }
+
+    func initSearchButton() {
+        self.searchView = UIView(frame: CGRectMake(0, -57, self.tableView.frame.width, 50))
+        self.searchView.backgroundColor = UIColor.redColor()
+        tableView.addSubview(self.searchView)
+    }
+
+    func initNavigationBar() {
         self.navigationController!.navigationBar.barTintColor = UIColor.myOrangeColor()
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         self.navigationController!.navigationBar.alpha = 1.0
@@ -35,21 +59,31 @@ class ListViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = filterButton
     }
 
-    func initLayout() {
-        tableView.backgroundColor = UIColor.grayColor()
-        tableView.registerClass(StudyListItemTableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        tableView.estimatedRowHeight = 44
-        tableView.rowHeight = UITableViewAutomaticDimension
-        let inset = UIEdgeInsetsMake(7, 0, 7, 0);
-        tableView.contentInset = inset
-    }
-
     // MARK: Actions
 
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         if (self.studies.count != 0 && !hitEndPage && scrollView.contentOffset.y > scrollView.contentOffset.y - 1000) {
             getNextPage()
+        }
+    }
+
+    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if decelerate {
+            searchView.resignFirstResponder()
+        }
+
+        if scrollView.contentOffset.y < 0 && tableView.contentInset.top != 57 {
+            tableView.contentInset = UIEdgeInsetsMake(57, 0, 0, 0)
+            tableView.setContentOffset(CGPointMake(0, -57), animated: true)
+        }
+
+        else {
+            UIView.beginAnimations(nil, context: nil)
+            UIView.setAnimationDuration(0.2)
+
+            tableView.contentInset = UIEdgeInsetsMake(7, 0, 0, 0)
+
+            UIView.commitAnimations()
         }
     }
 
@@ -63,7 +97,6 @@ class ListViewController: UITableViewController {
     // MARK: Load Data
     
     func searchStudies(areas: Array<String>=Array<String>(), categories: Array<String>=Array<String>()) {
-        print("search!!\n")
         if self.loading {
             return
         }
