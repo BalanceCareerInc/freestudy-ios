@@ -22,6 +22,7 @@ class ListViewController: UITableViewController {
         tableView.registerClass(StudyListItemTableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         tableView.estimatedRowHeight = 44
+        tableView.rowHeight = UITableViewAutomaticDimension
         let inset = UIEdgeInsetsMake(7, 0, 7, 0);
         tableView.contentInset = inset
     }
@@ -63,8 +64,8 @@ class ListViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("cell") as! StudyListItemTableViewCell
-        cell.studyTitle.text = self.studies![indexPath.row]["title"].stringValue
-        
+        let study = self.studies![indexPath.row]
+        cell.bindStudy(study)
         return cell
     }
     
