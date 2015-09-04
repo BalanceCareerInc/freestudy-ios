@@ -2,12 +2,13 @@ import SwiftyJSON
 
 class TagsManager {
     static let sharedInstance = TagsManager()
-    var filters: Dictionary<String, Array<String>>!
-    var displayNames: Dictionary<String, String>!
+    private var filters: Dictionary<String, Array<String>>!
+    private var parents: Dictionary<String, String>!
+    private var displayNames: Dictionary<String, String>!
     var categories: Array<String>!
     var areas: Array<String>!
     
-    init() {
+    private init() {
     }
     
     func nameOf(tagValue: String) -> String {
@@ -32,7 +33,7 @@ class TagsManager {
         self.areas = extractEndNodes(filters["area"]!)
     }
     
-    func extractEndNodes(children: Array<String>, depth: Int = 0) -> Array<String> {
+    private func extractEndNodes(children: Array<String>, depth: Int = 0) -> Array<String> {
         var endNodes = Array<String>()
         for child in children {
             if(filters[child] != nil && depth == 0) {

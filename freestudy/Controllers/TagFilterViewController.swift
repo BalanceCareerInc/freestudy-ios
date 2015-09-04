@@ -42,7 +42,7 @@ class TagFilterViewController: UICollectionViewController {
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("TagCell", forIndexPath: indexPath) as! TagCollectionCell
-        cell.label.text = TagsManager.sharedInstance.displayNames[tags(forSection: indexPath.section)[indexPath.row]]!
+        cell.label.text = TagsManager.sharedInstance.nameOf(tags(forSection: indexPath.section)[indexPath.row])
         return cell
     }
     
@@ -57,7 +57,7 @@ class TagFilterViewController: UICollectionViewController {
     func collectionView(collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let displayName = TagsManager.sharedInstance.displayNames[tags(forSection: indexPath.section)[indexPath.row]]!
+        let displayName = TagsManager.sharedInstance.nameOf(tags(forSection: indexPath.section)[indexPath.row])
         let displayNameString = displayName as NSString
         let size = displayNameString.sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(17.0)])
         return CGSize(width: size.width + 20, height: size.height + 20)
