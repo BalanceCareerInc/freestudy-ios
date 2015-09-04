@@ -86,11 +86,29 @@ class ReadViewController : UIViewController, UIWebViewDelegate, UIScrollViewDele
     }
     
     func showTagNames(area: String, category: String) {
-        let areaName = TagsManager.sharedInstance.nameOf(area)
-        let categoryName = TagsManager.sharedInstance.nameOf(category)
+        let tagsManager = TagsManager.sharedInstance
+        let areaName = tagsManager.nameOf(area)
+        
+        var categoryName: String
+        if tagsManager.isSubSubTag(category) {
+            let parentCategoryName = tagsManager.nameOf(tagsManager.parentOf(category)!)
+            categoryName = "\(parentCategoryName) \(tagsManager.nameOf(category))"
+        }
+        else {
+            categoryName = tagsManager.nameOf(category)
+        }
+        
         let tagNamesAttributedText = NSMutableAttributedString(string: "\(areaName) / \(categoryName)")
-        tagNamesAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.myOrangeColor() ,range: NSMakeRange(0, count(areaName)))
-        tagNamesAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor(hex: "#a0a0a0"), range: NSMakeRange(count(areaName) + 3, count(categoryName)))
+        tagNamesAttributedText.addAttribute(
+            NSForegroundColorAttributeName,
+            value: UIColor.myOrangeColor(),
+            range: NSMakeRange(0, count(areaName))
+        )
+        tagNamesAttributedText.addAttribute(
+            NSForegroundColorAttributeName,
+            value: UIColor(hex: "#a0a0a0"),
+            range: NSMakeRange(count(areaName) + 3, count(categoryName))
+        )
         self.tagNamesView.attributedText = tagNamesAttributedText
         self.tagNamesView.frame = CGRectMake(20.0, 20.0, self.view.frame.width - 40.0, 15.0)
         self.tagNamesView.sizeToFit()
