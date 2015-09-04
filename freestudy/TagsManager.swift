@@ -20,6 +20,17 @@ class TagsManager {
         }
     }
     
+    func isSubSubTag(tagValue: String) -> Bool {
+        var current = tagValue
+        for i in 0...2 {
+            current = self.parents[current]!
+            if current == nil {
+                return false
+            }
+        }
+        return true
+    }
+    
     func putTags(tags: JSON) {
         self.displayNames = Dictionary(map(tags["display_names"].dictionaryValue){
             (key, value) in (key, value.stringValue)
@@ -28,6 +39,12 @@ class TagsManager {
             (key:String, value:JSON) in
             (key, map(value.arrayValue){(tagName:JSON) -> String in tagName.stringValue})
         })
+        
+        for parent in self.filters.keys {
+            for child in self.filters[parent]! {
+                self.parents[child] = parent
+            }
+        }
         
         self.categories = extractEndNodes(filters["category"]!)
         self.areas = extractEndNodes(filters["area"]!)
