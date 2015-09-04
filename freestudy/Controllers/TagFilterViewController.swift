@@ -3,11 +3,18 @@ import SnapKit
 class TagFilterViewController: UICollectionViewController {
     
     let listViewController: ListViewController!
+    let sectionCategory = 0
+    let sectionArea = 1
+
+    var selectedAreas: Array<String>
+    var selectedCategories: Array<String>
     
-    init(listViewController: ListViewController) {
+    init(listViewController: ListViewController, selectedAreas: Array<String>, selectedCategories: Array<String>) {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = UICollectionViewScrollDirection.Vertical
         self.listViewController = listViewController
+        self.selectedAreas = selectedAreas
+        self.selectedCategories = selectedCategories
         super.init(collectionViewLayout: layout)
     }
 
@@ -34,6 +41,21 @@ class TagFilterViewController: UICollectionViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         initNavigationBar()
+
+        setDefaultSelected()
+    }
+
+    func setDefaultSelected() {
+        let categories = tags(forSection: sectionCategory)
+        let areas = tags(forSection: sectionArea)
+        for category in self.selectedCategories {
+            let indexPath = NSIndexPath(forRow: find(categories, category)!, inSection: self.sectionCategory)
+            self.collectionView?.selectItemAtIndexPath(indexPath, animated: true, scrollPosition: nil)
+        }
+        for area in self.selectedAreas {
+            let indexPath = NSIndexPath(forRow: find(areas, area)!, inSection: sectionArea)
+            self.collectionView?.selectItemAtIndexPath(indexPath, animated: true, scrollPosition: nil)
+        }
     }
 
     func initNavigationBar() {
@@ -64,19 +86,42 @@ class TagFilterViewController: UICollectionViewController {
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("TagCell", forIndexPath: indexPath) as! TagCollectionCell
-        cell.label.text = TagsManager.sharedInstance.nameOf(tags(forSection: indexPath.section)[indexPath.row])
-        cell.deselect()
+        let tag = tags(forSection: indexPath.section)[indexPath.row]
+
+        cell.label.text = TagsManager.sharedInstance.nameOf(tag)
+        if find(self.selectedAreas, tag) != nil || find(self.selectedCategories, tag) != nil {
+            cell.select()
+        }
+        else {
+            cell.deselect()
+        }
         return cell
     }
     
     override func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
-        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! TagCollectionCell
+        let cell = self.collectionView!.cellForItemAtIndexPath(indexPath) as! TagCollectionCell
+        let tag = tags(forSection: indexPath.section)[indexPath.row]
+
         cell.deselect()
+        if indexPath.section == sectionCategory {
+            selectedCategories.removeAtIndex(find(selectedCategories, tag)!)
+        }
+        else {
+            selectedAreas.removeAtIndex(find(selectedAreas, tag)!)
+        }
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! TagCollectionCell
+        let cell = self.collectionView!.cellForItemAtIndexPath(indexPath) as! TagCollectionCell
+        let tag = tags(forSection: indexPath.section)[indexPath.row]
+
         cell.select()
+        if indexPath.section == sectionCategory {
+            selectedCategories.append(tag)
+        }
+        else {
+            selectedAreas.append(tag)
+        }
     }
     
     func collectionView(collectionView: UICollectionView,
@@ -92,7 +137,7 @@ class TagFilterViewController: UICollectionViewController {
     func collectionView(collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        if section == 0{
+        if section == sectionCategory{
             return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
         else {
@@ -102,10 +147,10 @@ class TagFilterViewController: UICollectionViewController {
     
     
     func tags(forSection section: Int) -> Array<String> {
-        if section == 0 {
+        if section == sectionCategory {
             return TagsManager.sharedInstance.categories
         }
-        else if section == 1 {
+        else if section == sectionArea {
             return TagsManager.sharedInstance.areas
         }
         return Array<String>()
@@ -113,17 +158,7 @@ class TagFilterViewController: UICollectionViewController {
     
     
     func searchWithSelectedTags() {
-        var categories = Array<String>()
-        var areas = Array<String>()
-        for indexPath in self.collectionView!.indexPathsForSelectedItems() {
-            if indexPath.section == 0 {
-                categories.append(tags(forSection: indexPath.section)[indexPath.row])
-            }
-            else if indexPath.section == 1 {
-                areas.append(tags(forSection: indexPath.section)[indexPath.row])
-            }
-        }
-        listViewController.fetchStudies(areas: areas, categories: categories)
+        listViewController.fetchStudies(areas: selectedAreas, categories: selectedCategories)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     

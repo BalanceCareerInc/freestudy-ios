@@ -7,6 +7,9 @@ class ListViewController: UITableViewController {
     lazy var label = UILabel()
     var studies: JSON?
 
+    var selectedAreas = Array<String>()
+    var selectedCategories = Array<String>()
+
     // MARK: Initialization
 
     override func viewDidLoad() {
@@ -42,6 +45,8 @@ class ListViewController: UITableViewController {
     // MARK: Load Data
     
     func fetchStudies(areas: Array<String>=Array<String>(), categories: Array<String>=Array<String>()) {
+        selectedAreas = areas
+        selectedCategories = categories
         var parameters = "?"
         for area in areas {
             parameters = parameters + "area=" + area + "&"
@@ -84,7 +89,7 @@ class ListViewController: UITableViewController {
     }
 
     func showFilterDialog() {
-        let tagFilterViewController = TagFilterViewController(listViewController: self)
+        let tagFilterViewController = TagFilterViewController(listViewController: self, selectedAreas: selectedAreas, selectedCategories: selectedCategories)
         let navigatedTagFilterViewController = UINavigationController(rootViewController: tagFilterViewController)
         
         presentViewController(navigatedTagFilterViewController, animated: true, completion: nil)
