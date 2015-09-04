@@ -11,6 +11,10 @@ class TagsManager {
     private init() {
     }
     
+    func parentOf(tagValue: String) -> String? {
+        return self.parents[tagValue]
+    }
+    
     func nameOf(tagValue: String) -> String {
         if (self.displayNames[tagValue] != nil) {
             return self.displayNames[tagValue]!
