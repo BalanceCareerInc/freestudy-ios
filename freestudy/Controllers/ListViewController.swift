@@ -21,11 +21,14 @@ class ListViewController: UITableViewController {
         self.navigationController!.navigationBar.barTintColor = UIColor(hex: "#f48210")
         self.navigationController!.navigationBar.alpha = 1.0
         self.navigationController!.navigationBar.translucent = false
+        
+        self.navigationItem.title = "무료 스터디"
+        
+        let filterButton = UIBarButtonItem(title: "필터", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("showFilterDialog"))
+        self.navigationItem.rightBarButtonItem = filterButton
     }
 
     func initLayout() {
-        initNavigationBar()
-
         tableView.backgroundColor = UIColor.grayColor()
         tableView.registerClass(StudyListItemTableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.separatorStyle = UITableViewCellSeparatorStyle.None
@@ -33,17 +36,6 @@ class ListViewController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         let inset = UIEdgeInsetsMake(7, 0, 7, 0);
         tableView.contentInset = inset
-    }
-
-    func initNavigationBar() {
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
-        navigationItem.title = "무료 스터디"
-
-        navigationController?.navigationBar.barTintColor = UIColor.myOrangeColor()
-
-        let filterButton = UIBarButtonItem(title: "필터", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("showFilterDialog"))
-        filterButton.tintColor = UIColor.translucentWhiteColor()
-        self.navigationItem.rightBarButtonItem = filterButton
     }
 
     // MARK: Load Data
