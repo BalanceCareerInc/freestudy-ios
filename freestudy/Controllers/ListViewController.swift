@@ -18,7 +18,7 @@ class ListViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController!.navigationBar.barTintColor = UIColor(hex: "#f48210")
+        self.navigationController!.navigationBar.barTintColor = UIColor.myOrangeColor()
         self.navigationController!.navigationBar.alpha = 1.0
         self.navigationController!.navigationBar.translucent = false
         
