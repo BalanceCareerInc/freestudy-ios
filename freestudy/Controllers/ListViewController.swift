@@ -19,12 +19,13 @@ class ListViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController!.navigationBar.barTintColor = UIColor.myOrangeColor()
+        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         self.navigationController!.navigationBar.alpha = 1.0
         self.navigationController!.navigationBar.translucent = false
-        
         self.navigationItem.title = "무료 스터디"
-        
+
         let filterButton = UIBarButtonItem(title: "필터", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("showFilterDialog"))
+        filterButton.tintColor = UIColor.tranlucentWhiteColor()
         self.navigationItem.rightBarButtonItem = filterButton
     }
 

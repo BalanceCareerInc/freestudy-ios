@@ -14,9 +14,14 @@ class TagFilterViewController: UICollectionViewController {
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    // MARK: Initialization
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        initNavigationBar()
+
+
         self.collectionView?.registerClass(TagCollectionCell.self, forCellWithReuseIdentifier: "TagCell")
         self.collectionView?.snp_makeConstraints({ (make) -> Void in
             make.edges.equalTo(self.view).insets(UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5))
@@ -24,12 +29,29 @@ class TagFilterViewController: UICollectionViewController {
         self.collectionView?.allowsMultipleSelection = true
         self.view.backgroundColor = UIColor.whiteColor()
         self.collectionView?.backgroundColor = UIColor.whiteColor()
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        initNavigationBar()
+    }
+
+    func initNavigationBar() {
+        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.myOrangeColor()]
+        self.navigationItem.title = "필터"
+
+        self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
+
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: "닫기", style: .Plain, target: self, action: Selector("closeModal")
         )
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.a0a0a0()
+
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "검색", style: .Plain, target: self, action: Selector("searchWithSelectedTags")
         )
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.a0a0a0()
+
     }
     
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -43,15 +65,18 @@ class TagFilterViewController: UICollectionViewController {
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("TagCell", forIndexPath: indexPath) as! TagCollectionCell
         cell.label.text = TagsManager.sharedInstance.nameOf(tags(forSection: indexPath.section)[indexPath.row])
+        cell.deselect()
         return cell
     }
     
     override func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
-        collectionView.cellForItemAtIndexPath(indexPath)?.backgroundColor = UIColor.whiteColor()
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! TagCollectionCell
+        cell.deselect()
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        collectionView.cellForItemAtIndexPath(indexPath)?.backgroundColor = UIColor.yellowColor()
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! TagCollectionCell
+        cell.select()
     }
     
     func collectionView(collectionView: UICollectionView,
