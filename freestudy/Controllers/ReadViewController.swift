@@ -20,21 +20,7 @@ class ReadViewController : UIViewController, UIWebViewDelegate, UIScrollViewDele
             )
             .responseJSON { _, _, data, _ in
                 self.study = JSON(data!)["study"]
-                
-                let areaName = TagsManager.sharedInstance.nameOf(self.study!["area"].stringValue)
-                let categoryName = TagsManager.sharedInstance.nameOf(self.study!["category"].stringValue)
-                let tagNamesAttributedText = NSMutableAttributedString(string: "\(areaName) / \(categoryName)")
-                tagNamesAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor(hex: "#f48210"), range: NSMakeRange(0, count(areaName)))
-                tagNamesAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor(hex: "#a0a0a0"), range: NSMakeRange(count(areaName) + 3, count(categoryName)))
-                self.tagNamesView.attributedText = tagNamesAttributedText
-                
-                self.titleView.text = self.study!["title"].stringValue
-                self.titleView.frame.size.width = self.scrollView.frame.width - 40.0
-                self.titleView.sizeToFit()
-                self.titleView.frame.size.width = self.scrollView.frame.width - 40.0
-                
-                self.contentView.loadHTMLString(self.study!["content"].stringValue, baseURL: nil)
-                self.contentView.frame.origin = CGPointMake(0, self.titleView.frame.origin.y + self.titleView.frame.size.height + 40.0)
+                self.showStudy(self.study!)
             }
     }
 
@@ -64,8 +50,8 @@ class ReadViewController : UIViewController, UIWebViewDelegate, UIScrollViewDele
         self.scrollView.addSubview(titleView)
         self.scrollView.addSubview(tagNamesView)
         
-        self.tagNamesView.frame = CGRectMake(20.0, 20.0, self.view.frame.width - 40.0, 20.0)
         self.tagNamesView.textAlignment = .Center
+        self.tagNamesView.font = UIFont.systemFontOfSize(14.0)
         
         self.titleView.frame.origin = CGPointMake(20.0, 50.0)
         self.titleView.font = UIFont.systemFontOfSize(17.0, weight: 3.0)
@@ -82,13 +68,46 @@ class ReadViewController : UIViewController, UIWebViewDelegate, UIScrollViewDele
         self.contentView.scrollView.scrollEnabled = false
     }
     
+    
+    func showStudy(study: JSON) {
+        self.showTagNames(study["area"].stringValue, category: study["category"].stringValue)
+        self.showTitle(study["title"].stringValue)
+        self.showContent(study["content"].stringValue)
+    }
+    
+    func showTagNames(area: String, category: String) {
+        let areaName = TagsManager.sharedInstance.nameOf(area)
+        let categoryName = TagsManager.sharedInstance.nameOf(category)
+        let tagNamesAttributedText = NSMutableAttributedString(string: "\(areaName) / \(categoryName)")
+        tagNamesAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor(hex: "#f48210"), range: NSMakeRange(0, count(areaName)))
+        tagNamesAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor(hex: "#a0a0a0"), range: NSMakeRange(count(areaName) + 3, count(categoryName)))
+        self.tagNamesView.attributedText = tagNamesAttributedText
+        self.tagNamesView.frame = CGRectMake(20.0, 20.0, self.view.frame.width - 40.0, 15.0)
+        self.tagNamesView.sizeToFit()
+        self.tagNamesView.frame.size.width = self.view.frame.width - 40.0
+    }
+    
+    func showTitle(title: String) {
+        self.titleView.text = title
+        self.titleView.frame = CGRectMake(
+            20.0,
+            self.tagNamesView.frame.origin.y + self.tagNamesView.frame.height + 10.0,
+            self.view.frame.width - 40.0,
+            0.0
+        )
+        self.titleView.sizeToFit()
+        self.titleView.frame.size.width = self.view.frame.width - 40.0
+    }
+    
+    func showContent(contentHTML: String) {
+        self.contentView.frame.size = CGSizeMake(self.view.frame.width, 1)
+        self.contentView.frame.origin = CGPointMake(0, self.titleView.frame.origin.y + self.titleView.frame.size.height + 40.0)
+        self.contentView.loadHTMLString(contentHTML, baseURL: nil)
+    }
+    
     func webViewDidFinishLoad(webView: UIWebView) {
-        var height = CGFloat(webView.stringByEvaluatingJavaScriptFromString("document.body.offsetHeight;")!.toInt()!)
-        let newSize = CGSizeMake(scrollView.frame.size.width, height)
-        webView.frame.size = newSize
-        
-        var contentSize = webView.frame.size
-        contentSize.height += webView.frame.origin.y
-        self.scrollView.contentSize = contentSize
+        var fittingSize = webView.sizeThatFits(CGSizeZero)
+        webView.frame.size = fittingSize
+        self.scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, webView.frame.height + webView.frame.origin.y)
     }
 }
