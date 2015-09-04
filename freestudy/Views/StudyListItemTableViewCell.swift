@@ -46,7 +46,7 @@ class StudyListItemTableViewCell: UITableViewCell {
         cardView.addSubview(areaTag)
         areaTag.frame.origin.x = cardPadding
         areaTag.frame.origin.y = cardPadding
-        areaTag.textColor = UIColor(red: 244/255.0, green: 82/255.0, blue: 10/255.0, alpha: 1)
+        areaTag.textColor = UIColor.myOrangeColor()
 
         cardView.addSubview(categoryTag)
         categoryTag.frame.origin.y = cardPadding

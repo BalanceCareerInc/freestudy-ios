@@ -32,10 +32,10 @@ class ListViewController: UITableViewController {
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         navigationItem.title = "무료 스터디"
 
-        navigationController?.navigationBar.barTintColor = UIColor(red: 244/255.0, green: 82/255.0, blue: 10/255.0, alpha: 1)
+        navigationController?.navigationBar.barTintColor = UIColor.myOrangeColor()
 
         let filterButton = UIBarButtonItem(title: "필터", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("showFilterDialog"))
-        filterButton.tintColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.7)
+        filterButton.tintColor = UIColor.translucentWhiteColor()
         self.navigationItem.rightBarButtonItem = filterButton
     }
 
