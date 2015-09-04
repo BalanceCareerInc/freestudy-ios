@@ -18,6 +18,7 @@ class ListViewController: UITableViewController {
 
     func initLayout() {
         addFilterBarButtonItem()
+
         tableView.backgroundColor = UIColor.grayColor()
         tableView.registerClass(StudyListItemTableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.separatorStyle = UITableViewCellSeparatorStyle.None
@@ -28,7 +29,7 @@ class ListViewController: UITableViewController {
     }
 
     func addFilterBarButtonItem() {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "filter", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("showFilterDialog"))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "필터", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("showFilterDialog"))
     }
 
     // MARK: Load Data
