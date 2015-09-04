@@ -446,7 +446,7 @@
 			baseConfigurationReference = A6BB98C70711799D0A8BAD7C /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = freestudy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -460,7 +460,7 @@
 			baseConfigurationReference = 6EE72B0EB040FAF284542B66 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = freestudy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
