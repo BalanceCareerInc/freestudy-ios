@@ -10,6 +10,8 @@ class ReadViewController : UIViewController, UIWebViewDelegate, UIScrollViewDele
     lazy var tagNamesView = UILabel()
     lazy var titleView = UILabel()
     lazy var contentView = UIWebView()
+    lazy var writtenTimeView = UILabel()
+    lazy var showContactButton = UIButton()
     
     init(studyId: Int) {
         super.init(nibName: nil, bundle: nil)
@@ -36,7 +38,11 @@ class ReadViewController : UIViewController, UIWebViewDelegate, UIScrollViewDele
             UIOffsetMake(0, -60), forBarMetrics: .Default
         )
         initScrollView()
+        initContactButtonLayout()
+        
+        initTagNamesViewLayout()
         initTitleViewLayout()
+        initWrittenTimeViewLayout()
         initContentViewLayout()
     }
     
@@ -48,7 +54,7 @@ class ReadViewController : UIViewController, UIWebViewDelegate, UIScrollViewDele
     }
     
     func initScrollView() {
-        self.view.addSubview(scrollView)
+        self.view.addSubview(self.scrollView)
         self.scrollView.backgroundColor = UIColor.whiteColor()
         self.scrollView.scrollEnabled = true
         self.scrollView.snp_makeConstraints { (make) -> Void in
@@ -56,12 +62,28 @@ class ReadViewController : UIViewController, UIWebViewDelegate, UIScrollViewDele
         }
     }
     
-    func initTitleViewLayout() {
-        self.scrollView.addSubview(titleView)
-        self.scrollView.addSubview(tagNamesView)
-        
+    func initContactButtonLayout() {
+        self.view.addSubview(self.showContactButton)
+        self.showContactButton.snp_makeConstraints { (make) -> Void in
+            make.height.equalTo(50)
+            make.bottom.equalTo(self.view.snp_bottom).offset(-10)
+            
+            make.width.equalTo(self.view.snp_width).offset(-16)
+            make.left.equalTo(self.view.snp_left).offset(8)
+        }
+        self.showContactButton.backgroundColor = UIColor(hex: "#ef6c00", alpha: 85)
+        self.showContactButton.setTitle("연락처 보기", forState: .Normal)
+        self.showContactButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+    }
+    
+    func initTagNamesViewLayout() {
+        self.scrollView.addSubview(self.tagNamesView)
         self.tagNamesView.textAlignment = .Center
         self.tagNamesView.font = UIFont.systemFontOfSize(14.0)
+    }
+    
+    func initTitleViewLayout() {
+        self.scrollView.addSubview(self.titleView)
         
         self.titleView.frame.origin = CGPointMake(20.0, 50.0)
         self.titleView.font = UIFont.systemFontOfSize(17.0, weight: 3.0)
@@ -70,8 +92,16 @@ class ReadViewController : UIViewController, UIWebViewDelegate, UIScrollViewDele
         self.titleView.numberOfLines = 0
     }
     
+    func initWrittenTimeViewLayout() {
+        self.scrollView.addSubview(self.writtenTimeView)
+        self.writtenTimeView.frame.size = CGSizeMake(self.view.frame.width - 40.0, 10.0)
+        self.writtenTimeView.font = UIFont.systemFontOfSize(13.0)
+        self.writtenTimeView.textColor = UIColor(hex: "#a0a0a0")
+        self.writtenTimeView.textAlignment = .Center
+    }
+    
     func initContentViewLayout() {
-        self.scrollView.addSubview(contentView)
+        self.scrollView.addSubview(self.contentView)
         self.contentView.backgroundColor = UIColor.clearColor()
         self.contentView.delegate = self
         self.contentView.userInteractionEnabled = false
@@ -79,18 +109,38 @@ class ReadViewController : UIViewController, UIWebViewDelegate, UIScrollViewDele
     }
     
     
+    
     func showStudy(study: JSON) {
         self.showTagNames(study["area"].stringValue, category: study["category"].stringValue)
         self.showTitle(study["title"].stringValue)
+        self.showWrittenTime(study["write_time"].stringValue)
         self.showContent(study["content"].stringValue)
     }
     
     func showTagNames(area: String, category: String) {
-        let areaName = TagsManager.sharedInstance.nameOf(area)
-        let categoryName = TagsManager.sharedInstance.nameOf(category)
-        let tagNamesAttributedText = NSMutableAttributedString(string: "\(areaName) / \(categoryName)")
-        tagNamesAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.myOrangeColor() ,range: NSMakeRange(0, count(areaName)))
-        tagNamesAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor(hex: "#a0a0a0"), range: NSMakeRange(count(areaName) + 3, count(categoryName)))
+        let tagsManager = TagsManager.sharedInstance
+        let areaName = tagsManager.nameOf(area)
+        
+        var categoryName: String
+        if tagsManager.isSubSubTag(category) {
+            let parentCategoryName = tagsManager.nameOf(tagsManager.parentOf(category)!)
+            categoryName = "\(parentCategoryName) \(tagsManager.nameOf(category))"
+        }
+        else {
+            categoryName = tagsManager.nameOf(category)
+        }
+        
+        let tagNamesAttributedText = NSMutableAttributedString(string: "\(areaName) \(categoryName)")
+        tagNamesAttributedText.addAttribute(
+            NSForegroundColorAttributeName,
+            value: UIColor.myOrangeColor(),
+            range: NSMakeRange(0, count(areaName))
+        )
+        tagNamesAttributedText.addAttribute(
+            NSForegroundColorAttributeName,
+            value: UIColor(hex: "#a0a0a0"),
+            range: NSMakeRange(count(areaName) + 1, count(categoryName))
+        )
         self.tagNamesView.attributedText = tagNamesAttributedText
         self.tagNamesView.frame = CGRectMake(20.0, 20.0, self.view.frame.width - 40.0, 15.0)
         self.tagNamesView.sizeToFit()
@@ -101,7 +151,7 @@ class ReadViewController : UIViewController, UIWebViewDelegate, UIScrollViewDele
         self.titleView.text = title
         self.titleView.frame = CGRectMake(
             20.0,
-            self.tagNamesView.frame.origin.y + self.tagNamesView.frame.height + 10.0,
+            self.tagNamesView.frame.origin.y + self.tagNamesView.frame.height + 5.0,
             self.view.frame.width - 40.0,
             0.0
         )
@@ -109,9 +159,14 @@ class ReadViewController : UIViewController, UIWebViewDelegate, UIScrollViewDele
         self.titleView.frame.size.width = self.view.frame.width - 40.0
     }
     
+    func showWrittenTime(writtenTime: String) {
+        self.writtenTimeView.text = writtenTime
+        self.writtenTimeView.frame.origin = CGPointMake(20.0, self.titleView.frame.origin.y + self.titleView.frame.height + 15.0)
+    }
+    
     func showContent(contentHTML: String) {
         self.contentView.frame.size = CGSizeMake(self.view.frame.width, 1)
-        self.contentView.frame.origin = CGPointMake(0, self.titleView.frame.origin.y + self.titleView.frame.size.height + 40.0)
+        self.contentView.frame.origin = CGPointMake(0, self.writtenTimeView.frame.origin.y + self.writtenTimeView.frame.size.height + 40.0)
         self.contentView.loadHTMLString(contentHTML, baseURL: nil)
     }
     

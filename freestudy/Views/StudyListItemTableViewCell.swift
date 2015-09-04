@@ -69,8 +69,16 @@ class StudyListItemTableViewCell: UITableViewCell {
 
     func bindStudy(study: JSON) {
         studyTitle.text = study["title"].stringValue
-        categoryTag.text = TagsManager.sharedInstance.nameOf(study["category"].stringValue)
-        areaTag.text = TagsManager.sharedInstance.nameOf(study["area"].stringValue)
+        
+        let category = study["category"].stringValue
+        let tagsManager = TagsManager.sharedInstance
+        if(tagsManager.isSubSubTag(category)) {
+            categoryTag.text = tagsManager.nameOf(tagsManager.parentOf(category)!)
+        }
+        else {
+            categoryTag.text = tagsManager.nameOf(category)
+        }
+        areaTag.text = tagsManager.nameOf(study["area"].stringValue)
         writtenAt.text = study["write_time"].stringValue
 
         areaTag.sizeToFit()
