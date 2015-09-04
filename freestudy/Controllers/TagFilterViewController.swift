@@ -65,15 +65,18 @@ class TagFilterViewController: UICollectionViewController {
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("TagCell", forIndexPath: indexPath) as! TagCollectionCell
         cell.label.text = TagsManager.sharedInstance.nameOf(tags(forSection: indexPath.section)[indexPath.row])
+        cell.deselect()
         return cell
     }
     
     override func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
-        collectionView.cellForItemAtIndexPath(indexPath)?.backgroundColor = UIColor.whiteColor()
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! TagCollectionCell
+        cell.deselect()
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        collectionView.cellForItemAtIndexPath(indexPath)?.backgroundColor = UIColor.yellowColor()
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! TagCollectionCell
+        cell.select()
     }
     
     func collectionView(collectionView: UICollectionView,
