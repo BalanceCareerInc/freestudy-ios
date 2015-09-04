@@ -62,7 +62,10 @@ class ListViewController: UITableViewController {
     // MARK: Actions
 
     override func scrollViewDidScroll(scrollView: UIScrollView) {
-        if (self.studies.count != 0 && !hitEndPage && scrollView.contentOffset.y > scrollView.contentOffset.y - 1000) {
+        let contentOffSet = scrollView.contentOffset.y
+        let frameHeight = scrollView.frame.size.height
+        let contentSize = scrollView.contentSize.height
+        if (self.studies.count != 0 && !hitEndPage && contentOffSet + frameHeight > contentSize - 10) {
             getNextPage()
         }
     }
@@ -108,6 +111,8 @@ class ListViewController: UITableViewController {
         selectedCategories = categories
         self.studies = []
 
+        initFooterLoadingIndicator()
+
         fetchStudies(search: true)
     }
 
@@ -132,6 +137,9 @@ class ListViewController: UITableViewController {
                 var json = JSON(data!)
                 self.studies = self.studies + json["study_list"].arrayValue
                 self.hitEndPage = json["end"].boolValue
+                if self.hitEndPage {
+                    self.tableView.tableFooterView = nil
+                }
                 self.tableView.reloadData()
 
                 self.loading = false
@@ -140,6 +148,14 @@ class ListViewController: UITableViewController {
                     self.tableView.setContentOffset(CGPointZero, animated: false)
                 }
             }
+    }
+
+    func initFooterLoadingIndicator() {
+        var spinner = UIActivityIndicatorView()
+        spinner.frame.size.height = 44
+        spinner.startAnimating()
+        tableView.tableFooterView = spinner
+
     }
 
     func getFilterParameters() -> String {
