@@ -50,6 +50,7 @@ class ReadViewController : UIViewController, UIWebViewDelegate, UIScrollViewDele
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController!.navigationBar.barStyle = .Default
         self.navigationController!.navigationBar.barTintColor = UIColor.whiteColor()
         self.navigationController!.navigationBar.translucent = true
         self.navigationController!.navigationBar.alpha = 0.8
