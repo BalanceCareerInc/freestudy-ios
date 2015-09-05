@@ -20,8 +20,8 @@ class TagCollectionCell : UICollectionViewCell {
     }
 
     func deselect() {
-        self.label.textColor = UIColor.blackColor()
-        self.backgroundColor = UIColor.a0a0a0()
+        self.label.textColor = UIColor(hex: "#918ea1")
+        self.backgroundColor = UIColor(hex: "#f9f8f9")
 
     }
 
