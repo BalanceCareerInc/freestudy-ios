@@ -25,11 +25,26 @@ class SplashViewController: UIViewController {
     }
 
     func initLayout() {
-        let imageView = UIImageView(image: UIImage(named: "LaunchImage.png"))
+        let imageView = UIImageView(image: UIImage(named: getLaunchImageFileName()!))
         view.addSubview(imageView)
         imageView.snp_makeConstraints{ (make) -> Void in
             make.edges.equalTo(self.view)
         }
+    }
+
+    func getLaunchImageFileName() -> String? {
+        var allPngImages = NSBundle.mainBundle().pathsForResourcesOfType("png", inDirectory: nil)
+        print(allPngImages)
+
+        for imageName in allPngImages {
+            if imageName.containsString("LaunchImage") {
+                let image = UIImage(named: imageName as! String)
+                if (image!.scale == UIScreen.mainScreen().scale && CGSizeEqualToSize(image!.size, UIScreen.mainScreen().bounds.size)) {
+                    return imageName as? String
+                }
+            }
+        }
+        return nil
     }
 
     // MARK: Load Data
