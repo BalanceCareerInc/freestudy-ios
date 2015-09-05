@@ -91,6 +91,10 @@ class ListViewController: UITableViewController, UISearchControllerDelegate, UIS
         presentViewController(navigatedTagFilterViewController, animated: true, completion: nil)
     }
 
+    func readStudy(button: UIButton) {
+        self.navigationController!.pushViewController(ReadViewController(studyId: button.tag), animated: true)
+    }
+
     // MARK: Load Data
     
     func searchStudies(areas: Array<String>=Array<String>(), categories: Array<String>=Array<String>(), query: String="") {
@@ -201,6 +205,7 @@ class ListViewController: UITableViewController, UISearchControllerDelegate, UIS
         let study = self.studies[indexPath.row]
         cell.bindStudy(study)
         cell.selectionStyle = UITableViewCellSelectionStyle.None
+        cell.cardView.addTarget(self, action: Selector("readStudy:"), forControlEvents: .TouchUpInside)
         return cell
     }
     
