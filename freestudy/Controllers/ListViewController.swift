@@ -4,7 +4,7 @@ import SwiftyJSON
 
 class ListViewController: UITableViewController {
 
-    var searchView: UIView!
+    var searchController: UISearchController!
     var filterResultEmptyView: FilterResultEmptyView!
 
     var studies: [JSON] = []
@@ -19,7 +19,8 @@ class ListViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        initLayout()
+        initTableView()
+        initSearchController()
 
         searchStudies()
         initFilterResultEmptyView()
@@ -30,28 +31,25 @@ class ListViewController: UITableViewController {
 
         initNavigationBar()
     }
-
-    func initLayout() {
-        tableView.backgroundColor = UIColor(hex: "#efefef")
-        tableView.registerClass(StudyListItemTableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        tableView.estimatedRowHeight = 44
-        tableView.rowHeight = UITableViewAutomaticDimension
-        let inset = UIEdgeInsetsMake(4, 0, 4, 0);
-        tableView.contentInset = inset
-
-        initSearchButton()
+    
+    func initTableView() {
+        self.tableView.registerClass(StudyListItemTableViewCell.self, forCellReuseIdentifier: "cell")
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        self.tableView.estimatedRowHeight = 44
+        self.tableView.rowHeight = UITableViewAutomaticDimension
     }
-
-    func initSearchButton() {
-        self.searchView = UIView(frame: CGRectMake(0, -57, self.tableView.frame.width, 50))
-        self.searchView.backgroundColor = UIColor.redColor()
-        tableView.addSubview(self.searchView)
+    
+    func initSearchController() {
+        self.searchController = UISearchController(searchResultsController: nil)
+        self.searchController.searchBar.sizeToFit()
+        self.searchController.searchBar.backgroundImage = UIImage.imageWithColor(UIColor(hex: "#efefef"))
+        
+        self.tableView.tableHeaderView = self.searchController.searchBar
     }
 
     func initFilterResultEmptyView() {
-        filterResultEmptyView = FilterResultEmptyView(frame: CGRectMake(0, 0, tableView.frame.size.width, tableView.frame.size.height))
-        filterResultEmptyView.filterButton.addTarget(self, action: Selector("showFilterDialog"), forControlEvents: UIControlEvents.TouchUpInside)
+        self.filterResultEmptyView = FilterResultEmptyView(frame: CGRectMake(0, 0, tableView.frame.size.width, tableView.frame.size.height))
+        self.filterResultEmptyView.filterButton.addTarget(self, action: Selector("showFilterDialog"), forControlEvents: UIControlEvents.TouchUpInside)
     }
 
     func initNavigationBar() {
@@ -59,7 +57,6 @@ class ListViewController: UITableViewController {
         self.navigationController!.navigationBar.barTintColor = UIColor.myOrangeColor()
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         self.navigationController!.navigationBar.alpha = 1.0
-        self.navigationController!.navigationBar.translucent = false
         self.navigationItem.title = "무료 스터디"
 
         let filterButton = UIBarButtonItem(title: "필터", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("showFilterDialog"))
@@ -73,38 +70,9 @@ class ListViewController: UITableViewController {
         let contentOffSet = scrollView.contentOffset.y
         let frameHeight = scrollView.frame.size.height
         let contentSize = scrollView.contentSize.height
-        if (self.studies.count != 0 && !hitEndPage && contentOffSet + frameHeight > contentSize - 10) {
+        if (self.studies.count != 0 && !self.hitEndPage && contentOffSet + frameHeight > contentSize - 10) {
             getNextPage()
         }
-    }
-
-    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if decelerate {
-            searchView.resignFirstResponder()
-        }
-
-        if scrollView.contentOffset.y < 0 && tableView.contentInset.top != 57 {
-            showSearchButton()
-        }
-
-        else {
-            hideSearchButton()
-        }
-    }
-
-    func showSearchButton() {
-        tableView.contentInset = UIEdgeInsetsMake(57, 0, 0, 0)
-        tableView.setContentOffset(CGPointMake(0, -57), animated: true)
-
-    }
-
-    func hideSearchButton() {
-        UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationDuration(0.2)
-
-        tableView.contentInset = UIEdgeInsetsMake(7, 0, 0, 0)
-
-        UIView.commitAnimations()
     }
 
     func showFilterDialog() {
@@ -122,12 +90,12 @@ class ListViewController: UITableViewController {
         }
         self.loading = true
 
-        hitEndPage = false
+        self.hitEndPage = false
         refreshTableView()
 
-        page = 1
-        selectedAreas = areas
-        selectedCategories = categories
+        self.page = 1
+        self.selectedAreas = areas
+        self.selectedCategories = categories
         self.studies = []
 
         initFooterLoadingIndicator()
@@ -136,9 +104,8 @@ class ListViewController: UITableViewController {
     }
 
     func refreshTableView() {
-        tableView.scrollEnabled = true
-        tableView.alwaysBounceVertical = true
-        hideSearchButton()
+        self.tableView.scrollEnabled = true
+        self.tableView.alwaysBounceVertical = true
     }
 
     func getNextPage() {
@@ -171,7 +138,7 @@ class ListViewController: UITableViewController {
                 }
 
                 if search {
-                    self.tableView.setContentOffset(CGPointZero, animated: false)
+                    self.tableView.setContentOffset(CGPointMake(0, -70), animated: false)
                 }
             }
     }

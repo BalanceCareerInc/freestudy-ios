@@ -35,7 +35,7 @@ class StudyListItemTableViewCell: UITableViewCell {
         contentView.addSubview(cardView)
         cardView.backgroundColor = UIColor.whiteColor()
         cardView.snp_makeConstraints { (make) -> Void in
-            make.edges.equalTo(contentView).insets(UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8))
+            make.edges.equalTo(contentView).insets(UIEdgeInsets(top: 0, left: 8, bottom: 8, right: 8))
         }
         cardView.layer.cornerRadius = 1
 
