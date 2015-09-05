@@ -44,7 +44,6 @@ class ListViewController: UITableViewController {
         self.searchController.searchBar.sizeToFit()
         self.searchController.searchBar.backgroundImage = UIImage.imageWithColor(UIColor(hex: "#efefef"))
         
-        //var searchControllerWrap = UIView(frame: CGRectMake(0, 0, self.view.frame.width, self.searchController.searchBar.frame.height))
         self.tableView.tableHeaderView = self.searchController.searchBar
     }
 
@@ -139,7 +138,7 @@ class ListViewController: UITableViewController {
                 }
 
                 if search {
-                    self.tableView.setContentOffset(CGPointZero, animated: false)
+                    self.tableView.setContentOffset(CGPointMake(0, -70), animated: false)
                 }
             }
     }
