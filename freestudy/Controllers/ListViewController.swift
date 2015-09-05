@@ -2,7 +2,7 @@ import SnapKit
 import Alamofire
 import SwiftyJSON
 
-class ListViewController: UITableViewController {
+class ListViewController: UITableViewController, UISearchResultsUpdating {
 
     var searchController: UISearchController!
     var filterResultEmptyView: FilterResultEmptyView!
@@ -43,6 +43,7 @@ class ListViewController: UITableViewController {
         self.searchController = UISearchController(searchResultsController: nil)
         self.searchController.searchBar.sizeToFit()
         self.searchController.searchBar.backgroundImage = UIImage.imageWithColor(UIColor(hex: "#efefef"))
+        self.searchController.searchResultsUpdater = self
         
         self.tableView.tableHeaderView = self.searchController.searchBar
     }
@@ -175,7 +176,7 @@ class ListViewController: UITableViewController {
         }
     }
 
-    // MARK: Cell
+    // MARK: tableview dataSource, delegate
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.studies.count
     }
@@ -192,6 +193,11 @@ class ListViewController: UITableViewController {
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let studyId = self.studies[indexPath.row]["id"].intValue
         self.navigationController!.pushViewController(ReadViewController(studyId: studyId), animated: true)
+    }
+    
+    
+    // MARK: searchResultUpdating
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
     }
 }
 
