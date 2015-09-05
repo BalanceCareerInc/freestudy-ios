@@ -20,6 +20,7 @@
 		9F68C5EF1B97055300593021 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F68C5EC1B97055300593021 /* ListViewController.swift */; };
 		9F68C5F01B97055300593021 /* TagFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F68C5ED1B97055300593021 /* TagFilterViewController.swift */; };
 		9F68C5F41B970C4300593021 /* StudyListItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F68C5F31B970C4300593021 /* StudyListItemTableViewCell.swift */; };
+		9F69737F1B9AB66400017954 /* TagCollectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F69737E1B9AB66400017954 /* TagCollectionHeader.swift */; };
 		9FF28E3C1B9A70E600F83405 /* FilterResultEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF28E3B1B9A70E600F83405 /* FilterResultEmptyView.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,7 @@
 		9F68C5EC1B97055300593021 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		9F68C5ED1B97055300593021 /* TagFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagFilterViewController.swift; sourceTree = "<group>"; };
 		9F68C5F31B970C4300593021 /* StudyListItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudyListItemTableViewCell.swift; sourceTree = "<group>"; };
+		9F69737E1B9AB66400017954 /* TagCollectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCollectionHeader.swift; sourceTree = "<group>"; };
 		9FF28E3B1B9A70E600F83405 /* FilterResultEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterResultEmptyView.swift; sourceTree = "<group>"; };
 		A6BB98C70711799D0A8BAD7C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,6 +159,7 @@
 				9B09892F1B96CEB900DEECB4 /* TagCollectionCell.swift */,
 				9F68C5F31B970C4300593021 /* StudyListItemTableViewCell.swift */,
 				9FF28E3B1B9A70E600F83405 /* FilterResultEmptyView.swift */,
+				9F69737E1B9AB66400017954 /* TagCollectionHeader.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				9F68C5EE1B97055300593021 /* SplashViewController.swift in Sources */,
 				9F5571CA1B99572500F13800 /* +UIColor.swift in Sources */,
 				9FF28E3C1B9A70E600F83405 /* FilterResultEmptyView.swift in Sources */,
+				9F69737F1B9AB66400017954 /* TagCollectionHeader.swift in Sources */,
 				9BF9A2AD1B97C0150007582B /* ReadViewController.swift in Sources */,
 				9F68C5F41B970C4300593021 /* StudyListItemTableViewCell.swift in Sources */,
 			);

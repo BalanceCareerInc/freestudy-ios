@@ -12,6 +12,7 @@ class TagFilterViewController: UICollectionViewController {
     init(listViewController: ListViewController, selectedAreas: Array<String>, selectedCategories: Array<String>) {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = UICollectionViewScrollDirection.Vertical
+        layout.headerReferenceSize = CGSizeMake(0, 20)
         self.listViewController = listViewController
         self.selectedAreas = selectedAreas
         self.selectedCategories = selectedCategories
@@ -30,8 +31,9 @@ class TagFilterViewController: UICollectionViewController {
 
 
         self.collectionView?.registerClass(TagCollectionCell.self, forCellWithReuseIdentifier: "TagCell")
+        self.collectionView?.registerClass(TagCollectionHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SectionHeader")
         self.collectionView?.snp_makeConstraints({ (make) -> Void in
-            make.edges.equalTo(self.view).insets(UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5))
+            make.edges.equalTo(self.view).insets(UIEdgeInsets(top: 18, left: 16, bottom: 18, right: 16))
         })
         self.collectionView?.allowsMultipleSelection = true
         self.view.backgroundColor = UIColor.whiteColor()
@@ -97,6 +99,17 @@ class TagFilterViewController: UICollectionViewController {
         }
         return cell
     }
+
+    override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        let reusableView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "SectionHeader", forIndexPath: indexPath) as! TagCollectionHeader
+        if indexPath.section == self.sectionCategory {
+            reusableView.label.text = "카테고리"
+        }
+        else {
+            reusableView.label.text = "지역"
+        }
+        return reusableView
+    }
     
     override func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
         let cell = self.collectionView!.cellForItemAtIndexPath(indexPath) as! TagCollectionCell
@@ -138,10 +151,10 @@ class TagFilterViewController: UICollectionViewController {
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         if section == sectionCategory{
-            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            return UIEdgeInsets(top: 11, left: 0, bottom: 32, right: 0)
         }
         else {
-            return UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0)
+            return UIEdgeInsets(top: 11, left: 0, bottom: 0, right: 0)
         }
     }
     

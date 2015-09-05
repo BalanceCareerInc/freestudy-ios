@@ -11,6 +11,7 @@ class TagCollectionCell : UICollectionViewCell {
         label.snp_makeConstraints { (make) -> Void in
             make.center.equalTo(self)
         }
+        label.font = label.font.fontWithSize(15)
 
         self.layer.cornerRadius = 2
     }
