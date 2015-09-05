@@ -4,7 +4,7 @@ extension UILabel {
     func setHtml(html: String) {
         var err: NSError?
         self.attributedText = NSAttributedString(
-            data: html.dataUsingEncoding(NSUTF8StringEncoding)!,
+            data: html.dataUsingEncoding(NSUTF16StringEncoding)!,
             options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
             documentAttributes: nil,
             error: &err

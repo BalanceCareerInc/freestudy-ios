@@ -70,7 +70,8 @@ class StudyListItemTableViewCell: UITableViewCell {
     }
 
     func bindStudy(study: JSON) {
-        studyTitle.text = study["title"].stringValue
+        studyTitle.setHtml(study["title"].stringValue)
+        studyTitle.font = UIFont.systemFontOfSize(16.0)
         
         let category = study["category"].stringValue
         let tagsManager = TagsManager.sharedInstance
