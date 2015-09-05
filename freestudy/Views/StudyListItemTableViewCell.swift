@@ -15,7 +15,7 @@ class StudyListItemTableViewCell: UITableViewCell {
     lazy var tagWrap = UIView()
     lazy var areaTag = UILabel()
     lazy var categoryTag = UILabel()
-    lazy var cardView = UIView()
+    lazy var cardView = UIButton()
     lazy var studyTitle = UILabel()
     lazy var writtenAt = UILabel()
 
@@ -38,6 +38,8 @@ class StudyListItemTableViewCell: UITableViewCell {
             make.edges.equalTo(contentView).insets(UIEdgeInsets(top: 0, left: 8, bottom: 8, right: 8))
         }
         cardView.layer.cornerRadius = 1
+        cardView.setBackgroundImage(UIImage.imageWithColor(UIColor.whiteColor()), forState: UIControlState.Normal)
+        cardView.setBackgroundImage(UIImage.imageWithColor(UIColor(hex: "#f5f5f5")), forState: UIControlState.Highlighted)
 
         cardView.addSubview(areaTag)
         areaTag.frame.origin.x = cardPadding
@@ -70,6 +72,7 @@ class StudyListItemTableViewCell: UITableViewCell {
     }
 
     func bindStudy(study: JSON) {
+        cardView.tag = study["id"].intValue
         studyTitle.text = study["title"].stringValue
         
         let category = study["category"].stringValue

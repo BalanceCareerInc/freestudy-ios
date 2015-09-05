@@ -82,6 +82,10 @@ class ListViewController: UITableViewController {
         presentViewController(navigatedTagFilterViewController, animated: true, completion: nil)
     }
 
+    func readStudy(button: UIButton) {
+        self.navigationController!.pushViewController(ReadViewController(studyId: button.tag), animated: true)
+    }
+
     // MARK: Load Data
     
     func searchStudies(areas: Array<String>=Array<String>(), categories: Array<String>=Array<String>()) {
@@ -185,13 +189,8 @@ class ListViewController: UITableViewController {
         let study = self.studies[indexPath.row]
         cell.bindStudy(study)
         cell.selectionStyle = UITableViewCellSelectionStyle.None
+        cell.cardView.addTarget(self, action: Selector("readStudy:"), forControlEvents: .TouchUpInside)
         return cell
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let studyId = self.studies[indexPath.row]["id"].intValue
-        self.navigationController!.pushViewController(ReadViewController(studyId: studyId), animated: true)
     }
 }
 
