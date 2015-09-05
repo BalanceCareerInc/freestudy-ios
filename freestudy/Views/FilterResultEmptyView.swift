@@ -25,26 +25,32 @@ class FilterResultEmptyView: UIView {
 
         container.snp_makeConstraints { (make) -> Void in
             make.left.right.equalTo(self)
-            make.centerY.equalTo(self)
+            make.top.equalTo(self).offset(160)
         }
 
         title.text = "검색 결과가 없습니다."
         title.snp_makeConstraints { (make) -> Void in
             make.top.centerX.equalTo(container)
         }
+        title.textColor = UIColor(hex: "#505050")
+        title.font = title.font.fontWithSize(18)
 
         subtitle.text = "필터를 조금 더 넓은 범위로 설정해보세요"
         subtitle.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(title.snp_bottom)
+            make.top.equalTo(title.snp_bottom).offset(12)
             make.centerX.equalTo(container)
         }
+        subtitle.textColor = UIColor(hex: "#787878")
+        subtitle.font = subtitle.font.fontWithSize(14)
 
+        filterButton.frame.size.height = 100
         filterButton.setTitle("필터 재설정하기", forState: .Normal)
+        filterButton.titleLabel?.font = filterButton.titleLabel?.font.fontWithSize(15)
         filterButton.backgroundColor = UIColor.myOrangeColor()
         filterButton.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(subtitle.snp_bottom).offset(7)
-            make.left.equalTo(subtitle)
-            make.right.equalTo(subtitle)
+            make.top.equalTo(subtitle.snp_bottom).offset(32)
+            make.left.equalTo(container).offset(32)
+            make.right.equalTo(container).offset(-32)
             make.bottom.equalTo(container)
         }
 
