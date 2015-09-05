@@ -101,7 +101,7 @@ class ListViewController: UITableViewController, UISearchResultsUpdating {
 
         initFooterLoadingIndicator()
 
-        fetchStudies(search: true)
+        fetchStudies(areas: areas, categories: categories, page: self.page)
     }
 
     func refreshTableView() {
@@ -113,14 +113,14 @@ class ListViewController: UITableViewController, UISearchResultsUpdating {
         if self.loading {
             return
         }
+        
         self.loading = true
-
         self.page += 1
 
-        fetchStudies()
+        fetchStudies(areas: self.selectedAreas, categories: self.selectedCategories, page: self.page)
     }
 
-    func fetchStudies(search: Bool = false) {
+    func fetchStudies(areas: Array<String>=Array<String>(), categories: Array<String>=Array<String>(), page: Int = 1) {
         Alamofire
             .request(
                 .GET,
@@ -138,7 +138,7 @@ class ListViewController: UITableViewController, UISearchResultsUpdating {
                     self.refreshFooterView()
                 }
 
-                if search {
+                if page == 1 {
                     self.tableView.setContentOffset(CGPointMake(0, -70), animated: false)
                 }
             }
@@ -152,15 +152,15 @@ class ListViewController: UITableViewController, UISearchResultsUpdating {
 
     }
 
-    func getFilterParameters() -> String {
+    func getFilterParameters(areas: Array<String>=Array<String>(), categories: Array<String>=Array<String>(), page: Int = 1) -> String {
         var parameters = "?"
-        for area in self.selectedAreas {
+        for area in areas{
             parameters = parameters + "area=" + area + "&"
         }
-        for category in self.selectedCategories {
+        for category in categories {
             parameters = parameters + "category=" + category + "&"
         }
-        parameters = parameters + "page=" + String(self.page)
+        parameters = parameters + "page=" + String(page)
         return parameters
     }
 
