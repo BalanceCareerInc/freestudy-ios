@@ -70,7 +70,7 @@ class TagFilterViewController: UICollectionViewController {
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.a0a0a0()
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "검색", style: .Plain, target: self, action: Selector("searchWithSelectedTags")
+            title: "적용", style: .Plain, target: self, action: Selector("searchWithSelectedTags")
         )
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.a0a0a0()
 

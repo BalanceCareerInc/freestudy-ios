@@ -33,7 +33,6 @@ class ListViewController: UITableViewController {
     }
     
     func initTableView() {
-        self.tableView.backgroundColor = UIColor.grayColor()
         self.tableView.registerClass(StudyListItemTableViewCell.self, forCellReuseIdentifier: "cell")
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.tableView.estimatedRowHeight = 44
@@ -43,7 +42,9 @@ class ListViewController: UITableViewController {
     func initSearchController() {
         self.searchController = UISearchController(searchResultsController: nil)
         self.searchController.searchBar.sizeToFit()
-        self.searchController.searchBar.backgroundImage = UIImage.imageWithColor(UIColor.redColor())
+        self.searchController.searchBar.backgroundImage = UIImage.imageWithColor(UIColor(hex: "#efefef"))
+        
+        //var searchControllerWrap = UIView(frame: CGRectMake(0, 0, self.view.frame.width, self.searchController.searchBar.frame.height))
         self.tableView.tableHeaderView = self.searchController.searchBar
     }
 
@@ -53,6 +54,7 @@ class ListViewController: UITableViewController {
     }
 
     func initNavigationBar() {
+        self.navigationController?.navigationBar.barStyle = .Black
         self.navigationController!.navigationBar.barTintColor = UIColor.myOrangeColor()
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         self.navigationController!.navigationBar.alpha = 1.0
@@ -183,6 +185,7 @@ class ListViewController: UITableViewController {
         var cell = tableView.dequeueReusableCellWithIdentifier("cell") as! StudyListItemTableViewCell
         let study = self.studies[indexPath.row]
         cell.bindStudy(study)
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
         return cell
     }
     

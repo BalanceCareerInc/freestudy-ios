@@ -19,7 +19,7 @@ class StudyListItemTableViewCell: UITableViewCell {
     lazy var studyTitle = UILabel()
     lazy var writtenAt = UILabel()
 
-    let cardPadding = CGFloat(7)
+    let cardPadding = CGFloat(16)
 
     // MARK: Initialization
 
@@ -31,40 +31,42 @@ class StudyListItemTableViewCell: UITableViewCell {
     func initLayout() {
         contentView.autoresizingMask = UIViewAutoresizing.FlexibleHeight
 
-        backgroundColor = UIColor.grayColor()
+        backgroundColor = UIColor(hex: "#efefef")
         contentView.addSubview(cardView)
         cardView.backgroundColor = UIColor.whiteColor()
         cardView.snp_makeConstraints { (make) -> Void in
-            make.edges.equalTo(contentView).insets(UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 14))
+            make.edges.equalTo(contentView).insets(UIEdgeInsets(top: 0, left: 8, bottom: 8, right: 8))
         }
         cardView.layer.cornerRadius = 1
-        cardView.layer.masksToBounds = false
-        cardView.layer.shadowOffset = CGSizeMake(0, 0.5)
-        cardView.layer.shadowRadius = 1
-        cardView.layer.shadowOpacity = 0.2
 
         cardView.addSubview(areaTag)
         areaTag.frame.origin.x = cardPadding
         areaTag.frame.origin.y = cardPadding
         areaTag.textColor = UIColor.myOrangeColor()
+        areaTag.font = areaTag.font.fontWithSize(14)
 
         cardView.addSubview(categoryTag)
         categoryTag.frame.origin.y = cardPadding
+        categoryTag.font = categoryTag.font.fontWithSize(14)
+        categoryTag.textColor = UIColor.a0a0a0()
 
         cardView.addSubview(studyTitle)
         studyTitle.numberOfLines = 0
         studyTitle.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(categoryTag.snp_bottom).offset(7)
+            make.top.equalTo(categoryTag.snp_bottom).offset(10)
             make.left.equalTo(cardView).offset(cardPadding)
             make.right.equalTo(cardView).offset(cardPadding * (-1))
         }
+        studyTitle.font = studyTitle.font.fontWithSize(16)
 
         cardView.addSubview(writtenAt)
         writtenAt.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(studyTitle.snp_bottom).offset(3)
+            make.top.equalTo(studyTitle.snp_bottom).offset(10)
             make.left.equalTo(cardView).offset(cardPadding)
             make.bottom.equalTo(cardView).offset(cardPadding * (-1))
         }
+        writtenAt.font = writtenAt.font.fontWithSize(12)
+        writtenAt.textColor = UIColor.a0a0a0()
     }
 
     func bindStudy(study: JSON) {
