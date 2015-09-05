@@ -5,6 +5,7 @@ import SwiftyJSON
 class ListViewController: UITableViewController {
 
     var searchView: UIView!
+    var filterResultEmptyView: FilterResultEmptyView!
 
     var studies: [JSON] = []
 
@@ -21,6 +22,7 @@ class ListViewController: UITableViewController {
         initLayout()
 
         searchStudies()
+        initFilterResultEmptyView()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -47,6 +49,11 @@ class ListViewController: UITableViewController {
         tableView.addSubview(self.searchView)
     }
 
+    func initFilterResultEmptyView() {
+        filterResultEmptyView = FilterResultEmptyView(frame: CGRectMake(0, 0, tableView.frame.size.width, tableView.frame.size.height))
+        filterResultEmptyView.filterButton.addTarget(self, action: Selector("showFilterDialog"), forControlEvents: UIControlEvents.TouchUpInside)
+    }
+
     func initNavigationBar() {
         self.navigationController!.navigationBar.barTintColor = UIColor.myOrangeColor()
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
@@ -62,7 +69,10 @@ class ListViewController: UITableViewController {
     // MARK: Actions
 
     override func scrollViewDidScroll(scrollView: UIScrollView) {
-        if (self.studies.count != 0 && !hitEndPage && scrollView.contentOffset.y > scrollView.contentOffset.y - 1000) {
+        let contentOffSet = scrollView.contentOffset.y
+        let frameHeight = scrollView.frame.size.height
+        let contentSize = scrollView.contentSize.height
+        if (self.studies.count != 0 && !hitEndPage && contentOffSet + frameHeight > contentSize - 10) {
             getNextPage()
         }
     }
@@ -73,18 +83,27 @@ class ListViewController: UITableViewController {
         }
 
         if scrollView.contentOffset.y < 0 && tableView.contentInset.top != 57 {
-            tableView.contentInset = UIEdgeInsetsMake(57, 0, 0, 0)
-            tableView.setContentOffset(CGPointMake(0, -57), animated: true)
+            showSearchButton()
         }
 
         else {
-            UIView.beginAnimations(nil, context: nil)
-            UIView.setAnimationDuration(0.2)
-
-            tableView.contentInset = UIEdgeInsetsMake(7, 0, 0, 0)
-
-            UIView.commitAnimations()
+            hideSearchButton()
         }
+    }
+
+    func showSearchButton() {
+        tableView.contentInset = UIEdgeInsetsMake(57, 0, 0, 0)
+        tableView.setContentOffset(CGPointMake(0, -57), animated: true)
+
+    }
+
+    func hideSearchButton() {
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(0.2)
+
+        tableView.contentInset = UIEdgeInsetsMake(7, 0, 0, 0)
+
+        UIView.commitAnimations()
     }
 
     func showFilterDialog() {
@@ -102,13 +121,23 @@ class ListViewController: UITableViewController {
         }
         self.loading = true
 
-        page = 1
         hitEndPage = false
+        refreshTableView()
+
+        page = 1
         selectedAreas = areas
         selectedCategories = categories
         self.studies = []
 
+        initFooterLoadingIndicator()
+
         fetchStudies(search: true)
+    }
+
+    func refreshTableView() {
+        tableView.scrollEnabled = true
+        tableView.alwaysBounceVertical = true
+        hideSearchButton()
     }
 
     func getNextPage() {
@@ -136,10 +165,22 @@ class ListViewController: UITableViewController {
 
                 self.loading = false
 
+                if self.hitEndPage {
+                    self.refreshFooterView()
+                }
+
                 if search {
                     self.tableView.setContentOffset(CGPointZero, animated: false)
                 }
             }
+    }
+
+    func initFooterLoadingIndicator() {
+        var spinner = UIActivityIndicatorView()
+        spinner.frame.size.height = 44
+        spinner.startAnimating()
+        tableView.tableFooterView = spinner
+
     }
 
     func getFilterParameters() -> String {
@@ -152,6 +193,18 @@ class ListViewController: UITableViewController {
         }
         parameters = parameters + "page=" + String(self.page)
         return parameters
+    }
+
+    func refreshFooterView() {
+
+        if studies.count != 0 {
+            tableView.tableFooterView = nil
+        }
+        else if !(self.selectedAreas.count == 0 && self.selectedCategories.count == 0) {
+            tableView.tableFooterView = filterResultEmptyView
+            tableView.alwaysBounceVertical = false
+            tableView.scrollEnabled = false
+        }
     }
 
     // MARK: Cell
