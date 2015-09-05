@@ -5,6 +5,7 @@ import SwiftyJSON
 class ListViewController: UITableViewController {
 
     var searchView: UIView!
+    var filterResultEmptyView: FilterResultEmptyView!
 
     var studies: [JSON] = []
 
@@ -21,6 +22,7 @@ class ListViewController: UITableViewController {
         initLayout()
 
         searchStudies()
+        initFilterResultEmptyView()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -45,6 +47,11 @@ class ListViewController: UITableViewController {
         self.searchView = UIView(frame: CGRectMake(0, -57, self.tableView.frame.width, 50))
         self.searchView.backgroundColor = UIColor.redColor()
         tableView.addSubview(self.searchView)
+    }
+
+    func initFilterResultEmptyView() {
+        filterResultEmptyView = FilterResultEmptyView(frame: CGRectMake(0, 0, tableView.frame.size.width, tableView.frame.size.height))
+        filterResultEmptyView.filterButton.addTarget(self, action: Selector("showFilterDialog"), forControlEvents: UIControlEvents.TouchUpInside)
     }
 
     func initNavigationBar() {
@@ -76,18 +83,27 @@ class ListViewController: UITableViewController {
         }
 
         if scrollView.contentOffset.y < 0 && tableView.contentInset.top != 57 {
-            tableView.contentInset = UIEdgeInsetsMake(57, 0, 0, 0)
-            tableView.setContentOffset(CGPointMake(0, -57), animated: true)
+            showSearchButton()
         }
 
         else {
-            UIView.beginAnimations(nil, context: nil)
-            UIView.setAnimationDuration(0.2)
-
-            tableView.contentInset = UIEdgeInsetsMake(7, 0, 0, 0)
-
-            UIView.commitAnimations()
+            hideSearchButton()
         }
+    }
+
+    func showSearchButton() {
+        tableView.contentInset = UIEdgeInsetsMake(57, 0, 0, 0)
+        tableView.setContentOffset(CGPointMake(0, -57), animated: true)
+
+    }
+
+    func hideSearchButton() {
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(0.2)
+
+        tableView.contentInset = UIEdgeInsetsMake(7, 0, 0, 0)
+
+        UIView.commitAnimations()
     }
 
     func showFilterDialog() {
@@ -105,8 +121,10 @@ class ListViewController: UITableViewController {
         }
         self.loading = true
 
-        page = 1
         hitEndPage = false
+        refreshTableView()
+
+        page = 1
         selectedAreas = areas
         selectedCategories = categories
         self.studies = []
@@ -114,6 +132,12 @@ class ListViewController: UITableViewController {
         initFooterLoadingIndicator()
 
         fetchStudies(search: true)
+    }
+
+    func refreshTableView() {
+        tableView.scrollEnabled = true
+        tableView.alwaysBounceVertical = true
+        hideSearchButton()
     }
 
     func getNextPage() {
@@ -137,12 +161,13 @@ class ListViewController: UITableViewController {
                 var json = JSON(data!)
                 self.studies = self.studies + json["study_list"].arrayValue
                 self.hitEndPage = json["end"].boolValue
-                if self.hitEndPage {
-                    self.tableView.tableFooterView = nil
-                }
                 self.tableView.reloadData()
 
                 self.loading = false
+
+                if self.hitEndPage {
+                    self.refreshFooterView()
+                }
 
                 if search {
                     self.tableView.setContentOffset(CGPointZero, animated: false)
@@ -168,6 +193,18 @@ class ListViewController: UITableViewController {
         }
         parameters = parameters + "page=" + String(self.page)
         return parameters
+    }
+
+    func refreshFooterView() {
+
+        if studies.count != 0 {
+            tableView.tableFooterView = nil
+        }
+        else if !(self.selectedAreas.count == 0 && self.selectedCategories.count == 0) {
+            tableView.tableFooterView = filterResultEmptyView
+            tableView.alwaysBounceVertical = false
+            tableView.scrollEnabled = false
+        }
     }
 
     // MARK: Cell
