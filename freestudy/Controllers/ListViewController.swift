@@ -2,7 +2,7 @@ import SnapKit
 import Alamofire
 import SwiftyJSON
 
-class ListViewController: UITableViewController {
+class ListViewController: UITableViewController, UISearchControllerDelegate, UISearchBarDelegate {
 
     var searchController: UISearchController!
     var filterResultEmptyView: FilterResultEmptyView!
@@ -11,6 +11,7 @@ class ListViewController: UITableViewController {
 
     var selectedAreas = Array<String>()
     var selectedCategories = Array<String>()
+    var query = ""
     var page = 1
     var loading = false
     var hitEndPage = false
@@ -42,8 +43,16 @@ class ListViewController: UITableViewController {
     func initSearchController() {
         self.searchController = UISearchController(searchResultsController: nil)
         self.searchController.searchBar.sizeToFit()
-        self.searchController.searchBar.backgroundImage = UIImage.imageWithColor(UIColor(hex: "#efefef"))
         
+        let grayColor = UIColor(hex: "#efefef")
+        self.searchController.searchBar.backgroundImage = UIImage.imageWithColor(grayColor)
+        self.searchController.searchBar.barTintColor = grayColor
+        
+        self.searchController.dimsBackgroundDuringPresentation = false
+        self.searchController.delegate = self
+        self.searchController.searchBar.delegate = self
+        
+        self.definesPresentationContext = true
         self.tableView.tableHeaderView = self.searchController.searchBar
     }
 
@@ -88,7 +97,7 @@ class ListViewController: UITableViewController {
 
     // MARK: Load Data
     
-    func searchStudies(areas: Array<String>=Array<String>(), categories: Array<String>=Array<String>()) {
+    func searchStudies(areas: Array<String>=Array<String>(), categories: Array<String>=Array<String>(), query: String="") {
         if self.loading {
             return
         }
@@ -100,11 +109,12 @@ class ListViewController: UITableViewController {
         self.page = 1
         self.selectedAreas = areas
         self.selectedCategories = categories
+        self.query = query
         self.studies = []
 
         initFooterLoadingIndicator()
 
-        fetchStudies(search: true)
+        fetchStudies(areas: areas, categories: categories, query: query, page: self.page)
     }
 
     func refreshTableView() {
@@ -116,21 +126,23 @@ class ListViewController: UITableViewController {
         if self.loading {
             return
         }
+        
         self.loading = true
-
         self.page += 1
 
-        fetchStudies()
+        fetchStudies(areas: self.selectedAreas, categories: self.selectedCategories, query: self.query, page: self.page)
     }
 
-    func fetchStudies(search: Bool = false) {
+    func fetchStudies(areas: Array<String>=Array<String>(), categories: Array<String>=Array<String>(), query: String="", page: Int = 1) {
+        let parameter = getFilterParameters(areas: areas, categories: categories, query: query, page: page)
         Alamofire
             .request(
                 .GET,
-                "http://free.studysearch.co.kr/study/" + getFilterParameters(), headers: ["Accept": "application/json"]
+                "http://free.studysearch.co.kr/study/\(parameter)", headers: ["Accept": "application/json"]
             )
             .responseJSON { _, _, data, _ in
                 var json = JSON(data!)
+                
                 self.studies = self.studies + json["study_list"].arrayValue
                 self.hitEndPage = json["end"].boolValue
                 self.tableView.reloadData()
@@ -141,7 +153,7 @@ class ListViewController: UITableViewController {
                     self.refreshFooterView()
                 }
 
-                if search {
+                if page == 1 {
                     self.tableView.setContentOffset(CGPointMake(0, -70), animated: false)
                 }
             }
@@ -155,15 +167,19 @@ class ListViewController: UITableViewController {
 
     }
 
-    func getFilterParameters() -> String {
+    func getFilterParameters(areas: Array<String>=Array<String>(), categories: Array<String>=Array<String>(), query: String="", page: Int = 1) -> String {
         var parameters = "?"
-        for area in self.selectedAreas {
+        if count(query) > 0 {
+            parameters += "q=\(query.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)&"
+        }
+        for area in areas{
             parameters = parameters + "area=" + area + "&"
         }
-        for category in self.selectedCategories {
+        for category in categories {
             parameters = parameters + "category=" + category + "&"
         }
-        parameters = parameters + "page=" + String(self.page)
+        parameters = parameters + "page=" + String(page)
+        println(parameters)
         return parameters
     }
 
@@ -179,7 +195,7 @@ class ListViewController: UITableViewController {
         }
     }
 
-    // MARK: Cell
+    // MARK: tableview dataSource, delegate
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.studies.count
     }
@@ -191,6 +207,18 @@ class ListViewController: UITableViewController {
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         cell.cardView.addTarget(self, action: Selector("readStudy:"), forControlEvents: .TouchUpInside)
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let studyId = self.studies[indexPath.row]["id"].intValue
+        self.navigationController!.pushViewController(ReadViewController(studyId: studyId), animated: true)
+    }
+    
+    
+    // MARK: searchController delegate
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchStudies(areas: self.selectedAreas, categories: self.selectedCategories, query: searchBar.text)
     }
 }
 

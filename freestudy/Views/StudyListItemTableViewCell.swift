@@ -72,6 +72,8 @@ class StudyListItemTableViewCell: UITableViewCell {
     }
 
     func bindStudy(study: JSON) {
+        studyTitle.setHtml(study["title"].stringValue)
+        studyTitle.font = UIFont.systemFontOfSize(16.0)
         cardView.tag = study["id"].intValue
         studyTitle.text = study["title"].stringValue
         
