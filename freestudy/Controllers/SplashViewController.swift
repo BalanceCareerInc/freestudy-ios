@@ -34,7 +34,6 @@ class SplashViewController: UIViewController {
 
     func getLaunchImageFileName() -> String? {
         var allPngImages = NSBundle.mainBundle().pathsForResourcesOfType("png", inDirectory: nil)
-        print(allPngImages)
 
         for imageName in allPngImages {
             if imageName.containsString("LaunchImage") {
