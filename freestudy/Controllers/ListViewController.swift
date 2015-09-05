@@ -2,7 +2,7 @@ import SnapKit
 import Alamofire
 import SwiftyJSON
 
-class ListViewController: UITableViewController, UISearchResultsUpdating {
+class ListViewController: UITableViewController, UISearchControllerDelegate, UISearchBarDelegate {
 
     var searchController: UISearchController!
     var filterResultEmptyView: FilterResultEmptyView!
@@ -11,6 +11,7 @@ class ListViewController: UITableViewController, UISearchResultsUpdating {
 
     var selectedAreas = Array<String>()
     var selectedCategories = Array<String>()
+    var query = ""
     var page = 1
     var loading = false
     var hitEndPage = false
@@ -42,9 +43,16 @@ class ListViewController: UITableViewController, UISearchResultsUpdating {
     func initSearchController() {
         self.searchController = UISearchController(searchResultsController: nil)
         self.searchController.searchBar.sizeToFit()
-        self.searchController.searchBar.backgroundImage = UIImage.imageWithColor(UIColor(hex: "#efefef"))
-        self.searchController.searchResultsUpdater = self
         
+        let grayColor = UIColor(hex: "#efefef")
+        self.searchController.searchBar.backgroundImage = UIImage.imageWithColor(grayColor)
+        self.searchController.searchBar.barTintColor = grayColor
+        
+        self.searchController.dimsBackgroundDuringPresentation = false
+        self.searchController.delegate = self
+        self.searchController.searchBar.delegate = self
+        
+        self.definesPresentationContext = true
         self.tableView.tableHeaderView = self.searchController.searchBar
     }
 
@@ -85,7 +93,7 @@ class ListViewController: UITableViewController, UISearchResultsUpdating {
 
     // MARK: Load Data
     
-    func searchStudies(areas: Array<String>=Array<String>(), categories: Array<String>=Array<String>()) {
+    func searchStudies(areas: Array<String>=Array<String>(), categories: Array<String>=Array<String>(), query: String="") {
         if self.loading {
             return
         }
@@ -97,11 +105,12 @@ class ListViewController: UITableViewController, UISearchResultsUpdating {
         self.page = 1
         self.selectedAreas = areas
         self.selectedCategories = categories
+        self.query = query
         self.studies = []
 
         initFooterLoadingIndicator()
 
-        fetchStudies(areas: areas, categories: categories, page: self.page)
+        fetchStudies(areas: areas, categories: categories, query: query, page: self.page)
     }
 
     func refreshTableView() {
@@ -117,17 +126,19 @@ class ListViewController: UITableViewController, UISearchResultsUpdating {
         self.loading = true
         self.page += 1
 
-        fetchStudies(areas: self.selectedAreas, categories: self.selectedCategories, page: self.page)
+        fetchStudies(areas: self.selectedAreas, categories: self.selectedCategories, query: self.query, page: self.page)
     }
 
-    func fetchStudies(areas: Array<String>=Array<String>(), categories: Array<String>=Array<String>(), page: Int = 1) {
+    func fetchStudies(areas: Array<String>=Array<String>(), categories: Array<String>=Array<String>(), query: String="", page: Int = 1) {
+        let parameter = getFilterParameters(areas: areas, categories: categories, query: query, page: page)
         Alamofire
             .request(
                 .GET,
-                "http://free.studysearch.co.kr/study/" + getFilterParameters(), headers: ["Accept": "application/json"]
+                "http://free.studysearch.co.kr/study/\(parameter)", headers: ["Accept": "application/json"]
             )
             .responseJSON { _, _, data, _ in
                 var json = JSON(data!)
+                
                 self.studies = self.studies + json["study_list"].arrayValue
                 self.hitEndPage = json["end"].boolValue
                 self.tableView.reloadData()
@@ -152,8 +163,11 @@ class ListViewController: UITableViewController, UISearchResultsUpdating {
 
     }
 
-    func getFilterParameters(areas: Array<String>=Array<String>(), categories: Array<String>=Array<String>(), page: Int = 1) -> String {
+    func getFilterParameters(areas: Array<String>=Array<String>(), categories: Array<String>=Array<String>(), query: String="", page: Int = 1) -> String {
         var parameters = "?"
+        if count(query) > 0 {
+            parameters += "q=\(query.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)&"
+        }
         for area in areas{
             parameters = parameters + "area=" + area + "&"
         }
@@ -161,6 +175,7 @@ class ListViewController: UITableViewController, UISearchResultsUpdating {
             parameters = parameters + "category=" + category + "&"
         }
         parameters = parameters + "page=" + String(page)
+        println(parameters)
         return parameters
     }
 
@@ -196,8 +211,9 @@ class ListViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     
-    // MARK: searchResultUpdating
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    // MARK: searchController delegate
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchStudies(areas: self.selectedAreas, categories: self.selectedCategories, query: searchBar.text)
     }
 }
 
